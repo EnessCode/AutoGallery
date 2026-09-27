@@ -1,7 +1,7 @@
 ﻿using AutoGallery.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoGallery.WebUI.ViewComponents
+namespace AutoGallery.WebUI.ViewComponents.Home
 {
 	public class FeaturedCarsViewComponent : ViewComponent
 	{

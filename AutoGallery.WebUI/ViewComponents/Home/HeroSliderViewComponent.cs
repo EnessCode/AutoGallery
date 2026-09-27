@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AutoGallery.WebUI.ViewComponents
+namespace AutoGallery.WebUI.ViewComponents.Home
 {
 	public class HeroSliderViewComponent : ViewComponent
 	{
