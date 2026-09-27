@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+	<partial name="_AdminHead" />
+
+	@await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="admin-body">
+	<div class="admin-shell">
+
+		<partial name="_AdminSidebar" />
+
+		<div class="adm-main">
+
+			<partial name="_AdminNavbar" />
+
+			<main class="adm-content">
+				@RenderBody()
+			</main>
+
+			<partial name="_AdminFooter" />
+
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+	<script>
+		const burger = document.getElementById('admBurger');
+		const sidebar = document.getElementById('admSidebar');
+		const overlay = document.getElementById('admOverlay');
+		function closeSidebar() { sidebar.classList.remove('is-open'); overlay.classList.remove('is-open'); }
+		if (burger) {
+			burger.addEventListener('click', () => {
+				sidebar.classList.toggle('is-open');
+				overlay.classList.toggle('is-open');
+			});
+		}
+		if (overlay) { overlay.addEventListener('click', closeSidebar); }
+	</script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

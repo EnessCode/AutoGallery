@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Panel";
+    Layout = "_AdminLayout";
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="adm-stat">
+            <span>Aktif Portföy</span>
+            <b>340</b><span class="trend up">▲ 4.2%</span>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="adm-stat">
+            <span>Bu Ay Satış</span>
+            <b>27</b><span class="trend up">▲ 12%</span>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="adm-stat">
+            <span>Bekleyen Konsinye</span>
+            <b>12</b><span class="trend down">▼ 2</span>
+        </div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="adm-stat">
+            <span>Ortalama Satış Süresi</span>
+            <b>18 gün</b>
+        </div>
+    </div>
+</div>
+
+<div class="adm-card">
+    <div class="d-flex justify-content-between align-items-center p-3 pb-0">
+        <h2 class="h6 fw-bold mb-0">Son Konsinye Talepleri</h2>
+        <a href="/Admin/SellRequests" class="btn-adm-brass">Tümünü Gör</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table adm-table mb-0">
+            <thead>
+                <tr><th>Talep Sahibi</th><th>Araç</th><th>Fiyat Beklentisi</th><th>Durum</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Ahmet Yılmaz</td><td>BMW 3.20i — 2022</td><td>2.180.000 ₺</td><td><span class="status-pill ok">İncelendi</span></td></tr>
+                <tr><td>Elif Demir</td><td>Audi A4 — 2020</td><td>1.890.000 ₺</td><td><span class="status-pill paint">Beklemede</span></td></tr>
+                <tr><td>Can Öztürk</td><td>Mercedes C200 — 2021</td><td>2.450.000 ₺</td><td><span class="status-pill chg">Reddedildi</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
