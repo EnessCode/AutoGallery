@@ -1,4 +1,8 @@
+using AutoGallery.Application.Interfaces.Repositories;
+using AutoGallery.Application.Interfaces.Services;
+using AutoGallery.Application.Services;
 using AutoGallery.Infrastructure.Contexts;
+using AutoGallery.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
 	options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+
+builder.Services.AddScoped<ICarService, CarService>();
 
 var app = builder.Build();
 
@@ -33,5 +42,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using (var scope = app.Services.CreateScope())
+{
+	var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+	DbInitializer.Seed(context);
+}
 
 app.Run();

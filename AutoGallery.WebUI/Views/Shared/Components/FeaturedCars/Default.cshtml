@@ -1,0 +1,44 @@
+﻿@model List<AutoGallery.Domain.Entities.Car>
+
+<section class="sec pt-5" id="stok">
+    <div class="container-x">
+        <div class="sec-head">
+            <h2>Öne Çıkan Araçlar</h2>
+            <p>Portföyümüzdeki tüm araçlar teslimden önce tam ekspertizden geçer; işte bu haftanın vitrin araçları.</p>
+        </div>
+        <div class="row g-4">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var car in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="car-card">
+                            <div class="car-thumb">
+                                <span class="badge-featured">Vitrin</span>
+                                <span class="ct-label">@car.Brand @car.Model</span>
+                            </div>
+                            <div class="car-body">
+                                <h3>@car.Brand @car.Model</h3>
+                                <div class="car-specs">
+                                    <span>@car.Year</span>
+                                    <span>@car.GearType</span>
+                                    <span>@car.FuelType</span>
+                                </div>
+                                <div class="car-price">
+                                    <b>@car.Price.ToString("N0") ₺</b>
+                                    <a asp-controller="Car" asp-action="Detail" asp-route-id="@car.Id">Detay →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center text-muted py-5">
+                    <p>Şu an vitrinde sergilenen araç bulunmamaktadır.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>

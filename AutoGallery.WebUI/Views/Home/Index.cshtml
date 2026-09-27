@@ -1,8 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<AutoGallery.Domain.Entities.Car>
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- 1. PREMİUM ARAÇ SLIDER -->
+@await Component.InvokeAsync("HeroSlider")
+
+<!-- 2. KONSİNYE / ARAÇ ALIM BANNER -->
+<section style="background-color: var(--ink2); border-bottom: 1px solid rgba(255,255,255,0.05);">
+    <div class="container-x py-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <h3 class="mb-1 fw-bold" style="color: var(--tx-l); font-size: 1.4rem;">Aracınızı Değerinde Satın veya Konsinye Bırakın</h3>
+            <p class="mb-0" style="color: var(--tx-lm); font-size: 0.95rem;">Üyelik veya ilan derdiyle uğraşmadan, profesyonel ekibimizden hemen teklif alın.</p>
+        </div>
+        <div>
+            <a href="#konsinye" class="btn-brass"><i class="fa-solid fa-handshake me-2"></i>Hemen Form Doldur</a>
+        </div>
+    </div>
+</section>
+
+<!-- 3. VİTRİN ARAÇLARI -->
+@await Component.InvokeAsync("FeaturedCars")
+
+<!-- 4. KURUMSAL GÜVENCE VE EKSPERTİZ -->
+<section class="sec sec-alt" id="ekspertiz">
+    <div class="container-x">
+        <div class="exp-wrap">
+            <div>
+                <div class="eyebrow" style="color: var(--brass-lt); margin-bottom:10px;">%100 Şeffaflık Garantisi</div>
+                <div class="sec-head" style="margin-bottom:20px;"><h2 style="color: var(--tx-l); font-size: 2.2rem;">Her aracın hikayesi,<br>satın almadan önce elinizde.</h2></div>
+                <p style="color:var(--tx-lm);line-height:1.65;margin-bottom:30px; font-size: 1.05rem;">AutoGallery, galerilerin yıllardır sözlü verdiği garantiyi ölçülebilir bir rapora dönüştürür. Kaputtan podyeye, her aracın 13 kritik noktası tek tek incelenip kayıt altına alınır.</p>
+
+                <div class="hero-stats border-0 pt-0">
+                    <div class="hstat"><b>18 Yıl</b><span>Sektör Tecrübesi</span></div>
+                    <div class="hstat"><b>13</b><span>Kontrol Noktası</span></div>
+                    <div class="hstat"><b>%0</b><span>Gizli Hasar Politikası</span></div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="svg-card" style="background: var(--ink);">
+                    <svg class="svg-car" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 130 L45 95 Q60 75 95 72 L150 70 L175 50 Q195 40 235 40 L275 45 Q300 55 320 75 L365 80 Q378 84 378 100 L378 128 L30 128 Z" stroke="#b6905b" stroke-width="1.6" />
+                        <circle cx="95" cy="130" r="16" stroke="#f4f2ec" stroke-width="1.6" />
+                        <circle cx="300" cy="130" r="16" stroke="#f4f2ec" stroke-width="1.6" />
+                        <line x1="175" y1="50" x2="175" y2="72" stroke="#f4f2ec" stroke-width="1" opacity=".4" />
+                        <line x1="235" y1="40" x2="235" y2="72" stroke="#f4f2ec" stroke-width="1" opacity=".4" />
+                    </svg>
+                    <span class="tag t1"><span class="dot ok"></span>Kaput — Orijinal</span>
+                    <span class="tag t2"><span class="dot paint"></span>Ön tampon — Boyalı</span>
+                    <span class="tag t3"><span class="dot ok"></span>Şasi — Sorunsuz</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. KONSİNYE FORMU -->
+@await Component.InvokeAsync("ConsignmentForm")

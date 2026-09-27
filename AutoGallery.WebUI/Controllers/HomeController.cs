@@ -1,31 +1,23 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using AutoGallery.Application.Interfaces.Services;
 using AutoGallery.WebUI.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
-namespace AutoGallery.WebUI.Controllers;
-
-public class HomeController : Controller
+namespace AutoGallery.WebUI.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		private readonly ICarService _carService;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+		public HomeController(ICarService carService)
+		{
+			_carService = carService;
+		}
 
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+		public async Task<IActionResult> Index()
+		{
+			var featuredCars = await _carService.GetFeaturedCarsAsync();
+			return View(featuredCars);
+		}
+	}
 }
