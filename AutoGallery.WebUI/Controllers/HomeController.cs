@@ -19,5 +19,10 @@ namespace AutoGallery.WebUI.Controllers
 			var featuredCars = await _carService.GetFeaturedCarsAsync();
 			return View(featuredCars);
 		}
+
+		public IActionResult About()
+		{
+			return View();
+		}
 	}
 }

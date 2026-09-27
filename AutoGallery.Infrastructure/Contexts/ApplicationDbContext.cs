@@ -21,6 +21,7 @@ namespace AutoGallery.Infrastructure.Contexts
 		public DbSet<FeatureCategory> FeatureCategories { get; set; } 
 		public DbSet<CarFeature> CarFeatures { get; set; }
 		public DbSet<CarSellRequest> CarSellRequests { get; set; }
+		public DbSet<ContactMessage> ContactMessages { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

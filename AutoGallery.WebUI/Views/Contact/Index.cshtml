@@ -1,0 +1,117 @@
+﻿@model AutoGallery.WebUI.Models.ContactFormViewModel
+
+@{
+    ViewData["Title"] = "İletişim — Bize Ulaşın";
+}
+
+<!-- ÜST BAŞLIK -->
+<div style="background-color: var(--ink2); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 40px 0; margin-bottom: 30px;">
+    <div class="container-x">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2" style="font-size: 0.9rem;">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" style="color: var(--brass-lt); text-decoration: none;">Anasayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: var(--tx-lm);">İletişim</li>
+            </ol>
+        </nav>
+        <h1 class="fw-bold mb-1" style="color: var(--tx-l); font-size: 2.2rem;">İletişim & Konum</h1>
+        <p class="mb-0" style="color: var(--tx-lm);">Sorularınız, konsinye talepleriniz veya randevu için bizimle 7/24 iletişime geçebilirsiniz.</p>
+    </div>
+</div>
+
+<!-- İLETİŞİM İÇERİK ALANI -->
+<section class="container-x pb-5">
+    <div class="row g-5">
+        <!-- Sol Taraf: İletişim Bilgileri -->
+        <div class="col-lg-5">
+            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; height: 100%;">
+                <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 1.5rem;">Galeri Bilgileri</h3>
+
+                <ul class="list-unstyled mb-5" style="display: flex; flex-direction: column; gap: 20px; color: var(--tx-lm);">
+                    <li class="d-flex align-items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+                        <div>
+                            <strong class="d-block text-white mb-1">Merkez Showroom</strong>
+                            <span>Maslak Mah. Oto Sanayi Sit. Dereboyu Cad. No: 34, Sarıyer / İstanbul</span>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start gap-3">
+                        <i class="fa-solid fa-phone mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+                        <div>
+                            <strong class="d-block text-white mb-1">Telefon Hattı</strong>
+                            <span>0212 555 40 40 / 0850 333 20 20</span>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start gap-3">
+                        <i class="fa-solid fa-envelope mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+                        <div>
+                            <strong class="d-block text-white mb-1">E-Posta Adresi</strong>
+                            <span>info@autogallery.com</span>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start gap-3">
+                        <i class="fa-solid fa-clock mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+                        <div>
+                            <strong class="d-block text-white mb-1">Çalışma Saatleri</strong>
+                            <span>Hafta İçi / Cumartesi: 09:00 - 19:00<br>Pazar: Randevulu Hizmet</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="pt-3" style="border-top: 1px solid rgba(255,255,255,0.08);">
+                    <span class="d-block text-white fw-bold mb-3">Sosyal Medyada Bizi Takip Edin</span>
+                    <div class="d-flex gap-3">
+                        <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Taraf: Mesaj Gönderme Formu -->
+        <div class="col-lg-7">
+            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px;">
+                <h3 class="fw-bold mb-2" style="color: var(--tx-l); font-size: 1.5rem;">Bize Mesaj Gönderin</h3>
+                <p class="mb-4" style="color: var(--tx-lm);">Formu doldurun, müşteri temsilcilerimiz en kısa sürede sizinle iletişime geçsin.</p>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert p-3 mb-4" style="background: rgba(182, 144, 91, 0.15); border: 1px solid var(--brass); color: var(--brass-lt); border-radius: 8px;">
+                        <i class="fa-solid fa-circle-check me-2"></i> @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <!-- ModelState Hatalarını Toplu Listeleme -->
+                <div asp-validation-summary="All" class="text-danger mb-3" style="font-size: 0.9rem;"></div>
+
+                <form asp-controller="Contact" asp-action="Index" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-white-50">Adınız Soyadınız</label>
+                            <input asp-for="Name" class="form-control" placeholder="Adınız Soyadınız">
+                            <span asp-validation-for="Name" class="text-danger" style="font-size: 0.85rem;"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-white-50">E-Posta Adresiniz</label>
+                            <input asp-for="Email" class="form-control" placeholder="ornek@mail.com">
+                            <span asp-validation-for="Email" class="text-danger" style="font-size: 0.85rem;"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-white-50">Konu</label>
+                            <input asp-for="Subject" class="form-control" placeholder="Mesajınızın konusu nedir?">
+                            <span asp-validation-for="Subject" class="text-danger" style="font-size: 0.85rem;"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-white-50">Mesajınız</label>
+                            <textarea asp-for="Message" class="form-control" rows="4" placeholder="Detaylı mesajınızı buraya yazabilirsiniz..."></textarea>
+                            <span asp-validation-for="Message" class="text-danger" style="font-size: 0.85rem;"></span>
+                        </div>
+                        <div class="col-12 pt-2">
+                            <button type="submit" class="btn-brass w-100 py-3" style="border: none; font-weight: 600;"><i class="fa-solid fa-paper-plane me-2"></i>Mesajı Gönder</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

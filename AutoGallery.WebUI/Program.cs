@@ -19,6 +19,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 var app = builder.Build();
 

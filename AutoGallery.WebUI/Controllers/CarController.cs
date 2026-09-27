@@ -11,6 +11,11 @@ namespace AutoGallery.WebUI.Controllers
 		{
 			_carService = carService;
 		}
+		public async Task<IActionResult> Index()
+		{
+			var cars = await _carService.GetAllCarsAsync();
+			return View(cars);
+		}
 
 		public async Task<IActionResult> Detail(int id)
 		{
