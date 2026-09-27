@@ -18,6 +18,27 @@ namespace AutoGallery.Application.Services
 			_repository = repository;
 		}
 
+		public async Task<List<ContactMessage>> GetAllMessagesAsync()
+		{
+			var messages = await _repository.GetAllAsync();
+			return messages.OrderByDescending(x => x.CreatedAt).ToList();
+		}
+
+		public async Task<ContactMessage> GetMessageByIdAsync(int id)
+		{
+			return await _repository.GetByIdAsync(id);
+		}
+
+		public async Task MarkAsReadAsync(int id)
+		{
+			var message = await _repository.GetByIdAsync(id);
+			if (message != null && !message.IsRead)
+			{
+				message.IsRead = true;
+				_repository.Update(message);
+			}
+		}
+
 		public async Task SendMessageAsync(ContactMessage message)
 		{
 			await _repository.AddAsync(message);

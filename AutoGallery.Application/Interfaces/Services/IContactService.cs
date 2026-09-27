@@ -10,5 +10,8 @@ namespace AutoGallery.Application.Interfaces.Services
 	public interface IContactService
 	{
 		Task SendMessageAsync(ContactMessage message);
+		Task<List<ContactMessage>> GetAllMessagesAsync();
+		Task<ContactMessage> GetMessageByIdAsync(int id);
+		Task MarkAsReadAsync(int id);
 	}
 }

@@ -1,0 +1,34 @@
+@model ContactMessage
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-end mb-4 mt-3">
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+        <i class="bi bi-arrow-left me-2"></i> Geri Dön
+    </a>
+</div>
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-4">
+        <div class="row border-bottom pb-3 mb-3">
+            <div class="col-md-2 text-muted fw-semibold">Gönderen:</div>
+            <div class="col-md-10 fw-medium">@Model.Name</div>
+        </div>
+        <div class="row border-bottom pb-3 mb-3">
+            <div class="col-md-2 text-muted fw-semibold">E-Posta:</div>
+            <div class="col-md-10"><a href="mailto:@Model.Email" class="text-decoration-none">@Model.Email</a></div>
+        </div>
+        <div class="row border-bottom pb-3 mb-3">
+            <div class="col-md-2 text-muted fw-semibold">Tarih:</div>
+            <div class="col-md-10">@Model.CreatedAt.ToString("dd MMMM yyyy, HH:mm")</div>
+        </div>
+        <div class="row border-bottom pb-3 mb-4">
+            <div class="col-md-2 text-muted fw-semibold">Konu:</div>
+            <div class="col-md-10 fw-bold text-primary">@Model.Subject</div>
+        </div>
+
+        <div class="mb-2 text-muted fw-semibold">Mesaj İçeriği:</div>
+        <div class="p-4 bg-light rounded-3 border" style="white-space: pre-wrap; font-size: 1.05rem; line-height: 1.6;">@Model.Message</div>
+    </div>
+</div>
