@@ -20,7 +20,7 @@ namespace AutoGallery.Application.Services
 
 		public async Task<List<Car>> GetAllCarsAsync()
 		{
-			return await _carRepository.GetAllAsync();
+			return await _carRepository.GetAllCarsWithImagesAsync();
 		}
 
 		public async Task<List<Car>> GetFeaturedCarsAsync()

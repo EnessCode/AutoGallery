@@ -1,0 +1,77 @@
+@model EditCarViewModel
+@{
+    ViewData["Title"] = "Araç Düzenle";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <div>
+        <h2 class="h4 mb-0 fw-bold">Araç Düzenle</h2>
+        <div class="text-muted small mt-1">
+            <a asp-area="Admin" asp-controller="Cars" asp-action="Index" class="text-decoration-none text-muted">Araçlar</a> / @Model.Brand @Model.Model Düzenle
+        </div>
+    </div>
+    <a asp-area="Admin" asp-controller="Cars" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i> Listeye Dön</a>
+</div>
+
+<form asp-area="Admin" asp-controller="Cars" asp-action="Edit" method="post" enctype="multipart/form-data" id="carForm" class="adm-form" novalidate>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="card shadow-sm border-0 rounded-3">
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger m-3 mb-0"></div>
+
+        <div class="card-header bg-white border-bottom pt-4 px-4">
+            <ul class="nav nav-tabs border-0 form-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="nav-link ftab active fw-semibold text-dark" data-bs-toggle="tab" data-bs-target="#pane-basic" role="tab"><i class="bi bi-info-circle me-1"></i> Temel Bilgiler <span class="ftab-err text-danger"></span></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="nav-link ftab fw-semibold text-dark" data-bs-toggle="tab" data-bs-target="#pane-tech" role="tab"><i class="bi bi-gear me-1"></i> Teknik Özellikler <span class="ftab-err text-danger"></span></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="nav-link ftab fw-semibold text-dark" data-bs-toggle="tab" data-bs-target="#pane-expertise" role="tab"><i class="bi bi-clipboard2-check me-1"></i> Ekspertiz <span class="ftab-err text-danger"></span></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="nav-link ftab fw-semibold text-dark" data-bs-toggle="tab" data-bs-target="#pane-features" role="tab"><i class="bi bi-stars me-1"></i> Donanım <span class="ftab-err text-danger"></span></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button type="button" class="nav-link ftab fw-semibold text-dark" data-bs-toggle="tab" data-bs-target="#pane-images" role="tab"><i class="bi bi-images me-1"></i> Fotoğraflar <span class="ftab-err text-danger"></span></button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body p-4 tab-content">
+
+            <!-- 1) TEMEL BİLGİLER -->
+            <partial name="_EditBasicInfo" model="Model" />
+
+            <!-- 2) TEKNİK ÖZELLİKLER -->
+            <partial name="_EditTechSpecs" model="Model" />
+
+            <!-- 3) EKSPERTİZ -->
+            <partial name="_EditExpertise" model="Model" />
+
+            <!-- 4) DONANIM -->
+            <partial name="_EditFeatures" model="Model" />
+
+            <!-- 5) FOTOĞRAFLAR -->
+            <partial name="_EditImages" model="Model" />
+
+        </div>
+
+        <div class="card-footer bg-light border-top p-4 d-flex justify-content-between rounded-bottom-3">
+            <button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="btnPrev"><i class="bi bi-chevron-left"></i> Geri</button>
+            <div class="ms-auto d-flex gap-2">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="btnNext">İleri <i class="bi bi-chevron-right"></i></button>
+                <button type="submit" class="btn text-white px-5 rounded-pill fw-bold" style="background-color: #b6905b;"><i class="bi bi-check2-circle me-1"></i> Değişiklikleri Kaydet</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/admin-car-create.js"></script>
+}
+

@@ -1,0 +1,68 @@
+@model List<FeatureCategory>
+@{
+    ViewData["Title"] = "Donanım Kategorileri";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <div>
+        <h2 class="h4 mb-0 fw-bold">Donanım Yönetimi</h2>
+        <div class="text-muted small mt-1">Araç özelliklerini kategorize edin ve yönetin.</div>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="CreateCategory" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-folder-plus me-1"></i> Yeni Kategori
+        </a>
+        <a asp-action="CreateFeature" class="btn text-white rounded-pill px-4 fw-medium" style="background-color: #b6905b;">
+            <i class="bi bi-plus-lg me-1"></i> Yeni Donanım Ekle
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    @if (!Model.Any())
+    {
+        <div class="col-12 text-center py-5 text-muted bg-white rounded-3 shadow-sm">
+            <i class="bi bi-inboxes fs-1 d-block mb-3"></i>
+            <h5>Henüz hiç kategori bulunmuyor.</h5>
+            <p>Önce bir kategori oluşturarak donanımları eklemeye başlayabilirsiniz.</p>
+        </div>
+    }
+
+    @foreach (var category in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm border-0 rounded-3 h-100">
+                <div class="card-header bg-light border-bottom-0 d-flex justify-content-between align-items-center py-3">
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-diagram-3 me-2 text-secondary"></i>@category.Name</h6>
+                    <a asp-action="DeleteCategory" asp-route-id="@category.Id" class="text-danger" onclick="return confirm('Kategoriyi ve içindeki tüm donanımları silmek istediğinize emin misiniz?');">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-bottom-3">
+                        @if (category.Features == null || !category.Features.Any())
+                        {
+                            <li class="list-group-item text-muted small py-3 text-center bg-transparent border-0">Bu kategoride henüz donanım yok.</li>
+                        }
+                        else
+                        {
+                            @foreach (var feature in category.Features)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2 bg-transparent">
+                                    <span>
+                                        <i class="bi @(string.IsNullOrEmpty(feature.Icon) ? "bi-check2" : feature.Icon) text-muted me-2"></i>
+                                        @feature.Name
+                                    </span>
+                                    <a asp-action="DeleteFeature" asp-route-id="@feature.Id" class="text-danger opacity-75 text-decoration-none" title="Sil" onclick="return confirm('Silmek istediğinize emin misiniz?');">
+                                        <i class="bi bi-x-circle"></i>
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>

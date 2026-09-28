@@ -1,0 +1,84 @@
+@model EditCarViewModel
+@{
+    var statuses = new[] { "Orijinal", "Boyalı", "Değişen" };
+    var parts = new (string Prop, string Label)[]
+    {
+        ("EngineHood", "Kaput"), ("Roof", "Tavan"), ("TrunkCover", "Bagaj Kapağı"),
+        ("FrontBumper", "Ön Tampon"), ("RearBumper", "Arka Tampon"), ("FrontLeftFender", "Sol Ön Çamurluk"),
+        ("FrontRightFender", "Sağ Ön Çamurluk"), ("FrontLeftDoor", "Sol Ön Kapı"), ("FrontRightDoor", "Sağ Ön Kapı"),
+        ("RearLeftDoor", "Sol Arka Kapı"), ("RearRightDoor", "Sağ Arka Kapı"), ("RearLeftFender", "Sol Arka Çamurluk"),
+        ("RearRightFender", "Sağ Arka Çamurluk")
+    };
+
+    string PartValue(string prop) =>
+        Model.Expertise != null ? ((string?)Model.Expertise.GetType().GetProperty(prop)?.GetValue(Model.Expertise) ?? "Orijinal") : "Orijinal";
+
+    string StatusKey(string v) => v == "Boyalı" ? "paint" : v == "Değişen" ? "chg" : "ok";
+}
+
+<div class="tab-pane fade" id="pane-expertise" role="tabpanel">
+    <div class="mb-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-1">Ekspertiz Durumu</h5>
+        <div class="text-muted small">Her parçanın durumunu listeden seçin ya da şemadaki parçaya tıklayarak değiştirin.</div>
+    </div>
+
+    <div class="xp-grid d-flex gap-4 flex-wrap">
+        <div class="xp-diagram" style="flex: 0 0 300px;">
+            <svg viewBox="0 0 300 530" xmlns="http://www.w3.org/2000/svg" id="xpSvg" style="width: 100%; height: auto;">
+                <rect class="xp" data-part="FrontBumper" x="115" y="6" width="70" height="24" rx="9" />
+                <polygon class="xp" data-part="EngineHood" points="100,32 200,32 212,106 88,106" />
+                <polygon class="xp" data-part="Roof" points="88,106 212,106 222,155 222,375 212,424 88,424 78,375 78,155" />
+                <polygon class="xp" data-part="TrunkCover" points="88,424 212,424 200,498 100,498" />
+                <rect class="xp" data-part="RearBumper" x="115" y="500" width="70" height="24" rx="9" />
+
+                <rect class="xp" data-part="FrontLeftFender" x="24" y="104" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="FrontLeftDoor" x="24" y="201" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="RearLeftDoor" x="24" y="298" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="RearLeftFender" x="24" y="395" width="54" height="95" rx="6" />
+
+                <rect class="xp" data-part="FrontRightFender" x="222" y="104" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="FrontRightDoor" x="222" y="201" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="RearRightDoor" x="222" y="298" width="54" height="93" rx="6" />
+                <rect class="xp" data-part="RearRightFender" x="222" y="395" width="54" height="95" rx="6" />
+
+                <circle class="xp-wheel" cx="51" cy="150" r="23" />
+                <circle class="xp-wheel" cx="51" cy="443" r="23" />
+                <circle class="xp-wheel" cx="249" cy="150" r="23" />
+                <circle class="xp-wheel" cx="249" cy="443" r="23" />
+            </svg>
+            <p class="text-center text-muted small mt-2">Parçaya tıklayın: Orijinal, Boyalı, Değişen</p>
+        </div>
+
+        <div style="flex: 1; min-width: 300px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="xp-sum d-flex gap-3">
+                    <span class="badge bg-success-subtle text-success"><b id="cntOk">13</b> Orijinal</span>
+                    <span class="badge bg-warning-subtle text-warning-emphasis"><b id="cntPaint">0</b> Boyalı</span>
+                    <span class="badge bg-danger-subtle text-danger"><b id="cntChg">0</b> Değişen</span>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" id="btnResetXp">Sıfırla</button>
+            </div>
+
+            <div class="xp-rows">
+                @foreach (var p in parts)
+                {
+                    var val = PartValue(p.Prop);
+                    <div class="xp-row d-flex align-items-center mb-2" data-status="@StatusKey(val)" data-part="@p.Prop">
+                        <label class="w-50 fw-medium" for="Expertise_@p.Prop">@p.Label</label>
+                        <select class="form-select form-select-sm xp-select w-50" id="Expertise_@p.Prop" name="Expertise.@p.Prop" data-part="@p.Prop">
+                            @foreach (var s in statuses)
+                            {
+                                <option value="@s" selected="@(val == s)">@s</option>
+                            }
+                        </select>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4">
+                <label asp-for="Expertise.GeneralCondition" class="form-label fw-semibold">Genel Durum Notu</label>
+                <textarea asp-for="Expertise.GeneralCondition" rows="3" class="form-control" placeholder="Şasi, podye, motor ve alt takım hakkında notlar..."></textarea>
+            </div>
+        </div>
+    </div>
+</div>

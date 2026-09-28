@@ -3,6 +3,8 @@ using AutoGallery.Application.Interfaces.Services;
 using AutoGallery.Application.Services;
 using AutoGallery.Infrastructure.Contexts;
 using AutoGallery.Infrastructure.Repositories;
+using AutoGallery.Infrastructure.Services;
+using AutoGallery.WebUI.Areas.Admin.Services.Car;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,10 +18,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IFeatureCategoryRepository, FeatureCategoryRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IFeatureCategoryService, FeatureCategoryService>();
+builder.Services.AddScoped<IFeatureService, FeatureService>();
+builder.Services.AddScoped<ICarFeatureService, CarFeatureService>();
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
+builder.Services.AddScoped<ICarViewService, CarViewService>();
 
 var app = builder.Build();
 

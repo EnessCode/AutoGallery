@@ -1,0 +1,71 @@
+@model EditCarViewModel
+@{
+    var fuelTypes = new[] { "Benzin", "Dizel", "LPG", "Hibrit", "Elektrik" };
+    var gearTypes = new[] { "Manuel", "Otomatik", "Yarı Otomatik" };
+    var bodyTypes = new[] { "Sedan", "Hatchback", "SUV", "Station Wagon", "Coupe", "Cabrio", "Pick-up", "Minivan" };
+    var colors = new[] { "Beyaz", "Siyah", "Gri", "Gümüş", "Lacivert", "Mavi", "Kırmızı", "Bordo", "Yeşil", "Kahverengi", "Bej" };
+}
+
+<div class="tab-pane fade" id="pane-tech" role="tabpanel">
+    <div class="mb-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-1">Teknik Özellikler</h5>
+        <div class="text-muted small">Motor, şanzıman ve kasa bilgileri.</div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <label asp-for="FuelType" class="form-label fw-semibold">Yakıt Tipi</label>
+            <select asp-for="FuelType" class="form-select">
+                <option value="">Seçiniz</option>
+                @foreach (var x in fuelTypes)
+                {
+                    <option value="@x" selected="@(Model.FuelType == x)">@x</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="GearType" class="form-label fw-semibold">Vites</label>
+            <select asp-for="GearType" class="form-select">
+                <option value="">Seçiniz</option>
+                @foreach (var x in gearTypes)
+                {
+                    <option value="@x" selected="@(Model.GearType == x)">@x</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="BodyType" class="form-label fw-semibold">Kasa Tipi</label>
+            <select asp-for="BodyType" class="form-select">
+                <option value="">Seçiniz</option>
+                @foreach (var x in bodyTypes)
+                {
+                    <option value="@x" selected="@(Model.BodyType == x)">@x</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Color" class="form-label fw-semibold">Renk</label>
+            <input asp-for="Color" class="form-control" list="colorList" placeholder="Seçin veya yazın" />
+            <datalist id="colorList">
+                @foreach (var c in colors)
+                {
+                    <option value="@c"></option>
+                }
+            </datalist>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="EngineCapacity" class="form-label fw-semibold">Motor Hacmi</label>
+            <div class="input-group">
+                <input asp-for="EngineCapacity" class="form-control" placeholder="1598" />
+                <span class="input-group-text">cc</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="HorsePower" class="form-label fw-semibold">Motor Gücü</label>
+            <div class="input-group">
+                <input asp-for="HorsePower" class="form-control" placeholder="150" />
+                <span class="input-group-text">hp</span>
+            </div>
+        </div>
+    </div>
+</div>

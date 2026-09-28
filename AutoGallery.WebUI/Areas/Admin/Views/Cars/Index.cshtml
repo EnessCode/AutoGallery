@@ -1,0 +1,88 @@
+@model List<Car>
+@{
+    ViewData["Title"] = "Araç Yönetimi";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 rounded-3 mt-3">
+    <div class="card-header bg-white border-bottom-0 d-flex justify-content-between align-items-center pt-4 pb-3 px-4">
+        <h5 class="mb-0 fw-bold">Portföydeki Araçlar</h5>
+        <a asp-action="Create" class="btn rounded-pill px-4 text-white d-flex align-items-center" style="background-color: #b6905b; border: none; font-weight: 500;">
+            <i class="bi bi-plus-lg me-2"></i> Yeni Araç Ekle
+        </a>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-dark">
+                    <tr>
+                        <th class="ps-4 py-3 fw-semibold border-bottom-0">Görsel</th>
+                        <th class="py-3 fw-semibold border-bottom-0">Marka & Model</th>
+                        <th class="py-3 fw-semibold border-bottom-0">Yıl / KM</th>
+                        <th class="py-3 fw-semibold border-bottom-0">Fiyat</th>
+                        <th class="py-3 fw-semibold border-bottom-0">Durum</th>
+                        <th class="text-end pe-4 py-3 fw-semibold border-bottom-0">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    @foreach (var car in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 py-3">
+                                @{
+                                    var displayImage = car.CarImages != null && car.CarImages.Any()
+                                    ? car.CarImages.FirstOrDefault().ImageUrl
+                                    : "/images/placeholder.jpg";
+                                }
+                                <div class="bg-light rounded-2 d-flex align-items-center justify-content-center overflow-hidden" style="width: 80px; height: 45px;">
+                                    <img src="@displayImage" alt="@car.Brand" class="w-100 h-100" style="object-fit: cover;" onerror="this.onerror=null;this.src='/images/placeholder.jpg';this.style.display='none';this.parentElement.innerHTML='<i class=\'bi bi-car-front text-muted fs-4\'></i>';" />
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="fw-bold text-dark" style="font-size: 0.95rem;">@car.Brand @car.Model</div>
+                                <div class="text-secondary" style="font-size: 0.85rem;">@car.FuelType &bull; @car.GearType</div>
+                            </td>
+                            <td class="py-3">
+                                <div class="text-dark fw-medium" style="font-size: 0.95rem;">@car.Year</div>
+                                <div class="text-secondary" style="font-size: 0.85rem;">@car.Kilometer.ToString("N0") km</div>
+                            </td>
+                            <td class="fw-bold text-dark py-3">@car.Price.ToString("N0") ₺</td>
+                            <td class="py-3">
+                                @if (car.IsSold)
+                                {
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-2 fw-medium">Satıldı</span>
+                                }
+                                else if (car.IsFeatured)
+                                {
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-3 py-2 fw-medium">Vitrin</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2 fw-medium">Satışta</span>
+                                }
+                            </td>
+                            <td class="text-end pe-4 py-3">
+                                <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-medium">
+                                    <i class="bi bi-pencil me-1"></i> Düzenle
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-sm btn-outline-danger rounded-circle ms-2 d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; padding: 0;" onclick="return confirm('Bu aracı silmek istediğinize emin misiniz?');">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (!Model.Any())
+            {
+                <div class="p-5 text-center text-muted border-top">
+                    <i class="bi bi-car-front fs-1 d-block mb-3 text-secondary"></i>
+                    <h5>Portföyde hiç araç bulunmuyor.</h5>
+                    <p class="mb-0">Sağ üstteki "Yeni Araç Ekle" butonunu kullanarak portföyünüzü oluşturmaya başlayabilirsiniz.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

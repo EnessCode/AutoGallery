@@ -1,0 +1,51 @@
+@model CreateCarViewModel
+@{
+    string IconClass(string? i) =>
+        string.IsNullOrWhiteSpace(i) ? "bi bi-check2"
+        : i.Contains(' ') ? i
+        : i.StartsWith("bi-") ? "bi " + i : "bi bi-" + i;
+}
+
+<div class="tab-pane fade" id="pane-features" role="tabpanel">
+    <div class="mb-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-1">Donaným</h5>
+        <div class="text-muted small">Aracýn sahip olduðu özellikleri iþaretleyin.</div>
+    </div>
+
+    @if (Model.FeatureCategories == null || Model.FeatureCategories.Count == 0)
+    {
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-stars fs-1 d-block mb-3"></i>
+            <h5>Henüz tanýmlý donaným yok.</h5>
+            <p>Önce Donaným Kategorileri bölümünden kategori ve donaným ekleyin.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var cat in Model.FeatureCategories)
+            {
+                <div class="col-md-6 feat-group" data-total="@cat.Features.Count">
+                    <div class="feat-head d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                        <div>
+                            <b class="fs-6">@cat.Name</b>
+                            <small class="text-muted ms-2">(<span class="feat-count">0</span>/@cat.Features.Count seçili)</small>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-link text-decoration-none feat-toggle">Tümünü Seç</button>
+                    </div>
+                    <div class="feat-opts">
+                        @foreach (var f in cat.Features)
+                        {
+                            <div class="form-check feat-opt mb-1">
+                                <input class="form-check-input" type="checkbox" name="SelectedFeatureIds" value="@f.Id" id="feat_@f.Id" checked="@(Model.SelectedFeatureIds != null && Model.SelectedFeatureIds.Contains(f.Id))" />
+                                <label class="form-check-label" for="feat_@f.Id">
+                                    <i class="@IconClass(f.Icon) text-muted me-1"></i>@f.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

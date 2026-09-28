@@ -1,0 +1,25 @@
+@model CreateCategoryViewModel
+@{
+    ViewData["Title"] = "Yeni Kategori Ekle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="h4 mb-0 fw-bold">Yeni Kategori Ekle</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i> Listeye Dön</a>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        <form asp-action="CreateCategory" method="post">
+            <div class="mb-4">
+                <label asp-for="Name" class="form-label fw-semibold">Kategori Adı</label>
+                <input asp-for="Name" class="form-control" placeholder="Örn: İç Donanım, Güvenlik, Multimedya..." required />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn text-white px-5 rounded-pill fw-bold" style="background-color: #b6905b;">Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>

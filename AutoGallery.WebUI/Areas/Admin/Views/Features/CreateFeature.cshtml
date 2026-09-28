@@ -1,0 +1,40 @@
+@model CreateFeatureViewModel
+@{
+    ViewData["Title"] = "Yeni Donanım Ekle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="h4 mb-0 fw-bold">Yeni Donanım Ekle</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i> Listeye Dön</a>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        <form asp-action="CreateFeature" method="post">
+            <div class="mb-3">
+                <label asp-for="FeatureCategoryId" class="form-label fw-semibold">Hangi Kategoriye Eklenecek?</label>
+                <select asp-for="FeatureCategoryId" asp-items="ViewBag.Categories" class="form-select" required>
+                    <option value="">Kategori Seçiniz...</option>
+                </select>
+                <span asp-validation-for="FeatureCategoryId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label fw-semibold">Donanım Adı</label>
+                <input asp-for="Name" class="form-control" placeholder="Örn: Deri Koltuk, Geri Görüş Kamerası..." required />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Icon" class="form-label fw-semibold">İkon Sınıfı (İsteğe Bağlı)</label>
+                <input asp-for="Icon" class="form-control" placeholder="Örn: bi-bluetooth" />
+                <div class="form-text small">Bootstrap Icons sınıflarını kullanabilirsiniz. Boş bırakırsanız varsayılan tik ikonu görünür.</div>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn text-white px-5 rounded-pill fw-bold" style="background-color: #b6905b;">Donanımı Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>

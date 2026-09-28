@@ -1,0 +1,39 @@
+@model EditCarViewModel
+<div class="tab-pane fade" id="pane-images" role="tabpanel">
+    <div class="mb-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-1">Fotoğraflar</h5>
+        <div class="text-muted small">Mevcut fotoğrafları görüntüleyebilir ve yeni fotoğraflar ekleyebilirsiniz.</div>
+    </div>
+
+    @if (Model.ExistingImages != null && Model.ExistingImages.Any())
+    {
+        <div class="mb-4">
+            <h6 class="fw-bold text-secondary mb-3"><i class="bi bi-images me-1"></i> Mevcut Fotoğraflar</h6>
+            <div class="d-flex flex-wrap gap-3">
+                @foreach (var img in Model.ExistingImages)
+                {
+                    <div class="position-relative rounded overflow-hidden shadow-sm border" style="width: 120px; height: 120px;">
+                        <img src="@img.ImageUrl" alt="Araç Görseli" style="width: 100%; height: 100%; object-fit: cover;" />
+                        @if (img.IsMain)
+                        {
+                            <span class="badge bg-warning position-absolute top-0 start-0 m-1">Ana Foto</span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr class="mb-4" />
+        <h6 class="fw-bold text-secondary mb-3"><i class="bi bi-cloud-plus me-1"></i> Yeni Fotoğraf Ekle</h6>
+    }
+
+    <label class="dropzone d-block text-center p-5 border border-2 border-dashed rounded-3 bg-light mb-4" id="dropzone" for="UploadedImages" style="cursor: pointer;">
+        <i class="bi bi-cloud-arrow-up fs-1 text-secondary"></i>
+        <b class="d-block mt-2">İlave fotoğrafları sürükleyip bırakın veya seçmek için tıklayın</b>
+        <small class="text-muted">JPG, PNG, WEBP (Eklenen fotoğraflar mevcutlara dahil edilir)</small>
+    </label>
+    <input type="file" id="UploadedImages" name="UploadedImages" accept="image/jpeg,image/png,image/webp" multiple hidden />
+    <input type="hidden" asp-for="MainImageIndex" />
+
+    <div class="thumb-grid d-flex flex-wrap gap-3" id="thumbGrid"></div>
+</div>

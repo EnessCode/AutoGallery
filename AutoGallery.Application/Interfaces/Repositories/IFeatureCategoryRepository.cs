@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace AutoGallery.Application.Interfaces.Repositories
 {
-	public interface ICarRepository : IRepository<Car>
+	public interface IFeatureCategoryRepository : IRepository<FeatureCategory>
 	{
-		Task<List<Car>> GetFeaturedCarsAsync();
-		Task<Car> GetCarWithDetailsByIdAsync(int id);
-		Task<List<Car>> GetAllCarsWithImagesAsync();
+		Task<List<FeatureCategory>> GetAllWithFeaturesAsync();
 	}
 }

@@ -16,6 +16,14 @@ namespace AutoGallery.Infrastructure.Repositories
 		{
 		}
 
+		public async Task<List<Car>> GetAllCarsWithImagesAsync()
+		{
+			return await _context.Cars
+										.Include(c => c.CarImages) 
+										.OrderByDescending(c => c.Id)
+										.ToListAsync();
+		}
+
 		public async Task<Car> GetCarWithDetailsByIdAsync(int id)
 		{
 			return await _context.Cars
