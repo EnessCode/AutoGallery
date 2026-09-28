@@ -1,0 +1,73 @@
+﻿@model GalleryInfo
+
+<div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; height: 100%;">
+    <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 1.5rem;">Galeri Bilgileri</h3>
+
+    <ul class="list-unstyled mb-5" style="display: flex; flex-direction: column; gap: 20px; color: var(--tx-lm);">
+        <li class="d-flex align-items-start gap-3">
+            <i class="fa-solid fa-location-dot mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+            <div>
+                <strong class="d-block text-white mb-1">@Model?.Title</strong>
+                @if (!string.IsNullOrEmpty(Model?.GoogleMapUrl))
+                {
+                    <a href="@Model.GoogleMapUrl" target="_blank" style="color: var(--tx-lm); text-decoration: none; transition: 0.3s;" class="hover-brass">
+                        <span>@Model.Address</span>
+                        <small class="d-block mt-1" style="color: var(--brass-lt); font-size: 0.8rem;"><i class="fa-solid fa-map-location-dot me-1"></i>Yol Tarifi Al</small>
+                    </a>
+                }
+                else
+                {
+                    <span>@Model?.Address</span>
+                }
+            </div>
+        </li>
+
+        <li class="d-flex align-items-start gap-3">
+            <i class="fa-solid fa-phone mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+            <div>
+                <strong class="d-block text-white mb-1">Telefon Hattı</strong>
+                <span>
+                    @Model?.Phone1
+                    @if (!string.IsNullOrEmpty(Model?.Phone2))
+                    {
+                        @: / @Model.Phone2
+                    }
+                </span>
+            </div>
+        </li>
+
+        <li class="d-flex align-items-start gap-3">
+            <i class="fa-solid fa-envelope mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+            <div>
+                <strong class="d-block text-white mb-1">E-Posta Adresi</strong>
+                <span>@Model?.Email</span>
+            </div>
+        </li>
+
+        <li class="d-flex align-items-start gap-3">
+            <i class="fa-solid fa-clock mt-1" style="color: var(--brass); font-size: 1.2rem;"></i>
+            <div>
+                <strong class="d-block text-white mb-1">Çalışma Saatleri</strong>
+                <span>@Model?.WorkingHoursWeekdays<br>@Model?.WorkingHoursWeekend</span>
+            </div>
+        </li>
+    </ul>
+
+    <div class="pt-3" style="border-top: 1px solid rgba(255,255,255,0.08);">
+        <span class="d-block text-white fw-bold mb-3">Sosyal Medyada Bizi Takip Edin</span>
+        <div class="d-flex gap-3">
+            @if (!string.IsNullOrEmpty(Model?.InstagramUrl))
+            {
+                <a href="@Model.InstagramUrl" target="_blank" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-instagram"></i></a>
+            }
+            @if (!string.IsNullOrEmpty(Model?.LinkedinUrl))
+            {
+                <a href="@Model.LinkedinUrl" target="_blank" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-linkedin-in"></i></a>
+            }
+            @if (!string.IsNullOrEmpty(Model?.YoutubeUrl))
+            {
+                <a href="@Model.YoutubeUrl" target="_blank" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass); text-decoration: none; transition: 0.3s;"><i class="fa-brands fa-youtube"></i></a>
+            }
+        </div>
+    </div>
+</div>

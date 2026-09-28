@@ -1,0 +1,43 @@
+﻿@model AutoGallery.WebUI.Models.ContactFormViewModel
+
+<div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px;">
+    <h3 class="fw-bold mb-2" style="color: var(--tx-l); font-size: 1.5rem;">Bize Mesaj Gönderin</h3>
+    <p class="mb-4" style="color: var(--tx-lm);">Formu doldurun, müşteri temsilcilerimiz en kısa sürede sizinle iletişime geçsin.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert p-3 mb-4" style="background: rgba(182, 144, 91, 0.15); border: 1px solid var(--brass); color: var(--brass-lt); border-radius: 8px;">
+            <i class="fa-solid fa-circle-check me-2"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div asp-validation-summary="All" class="text-danger mb-3" style="font-size: 0.9rem;"></div>
+
+    <form asp-controller="Contact" asp-action="Index" method="post">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label text-white-50">Adınız Soyadınız</label>
+                <input asp-for="Name" class="form-control" placeholder="Adınız Soyadınız">
+                <span asp-validation-for="Name" class="text-danger" style="font-size: 0.85rem;"></span>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-white-50">E-Posta Adresiniz</label>
+                <input asp-for="Email" class="form-control" placeholder="ornek@mail.com">
+                <span asp-validation-for="Email" class="text-danger" style="font-size: 0.85rem;"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label text-white-50">Konu</label>
+                <input asp-for="Subject" class="form-control" placeholder="Mesajınızın konusu nedir?">
+                <span asp-validation-for="Subject" class="text-danger" style="font-size: 0.85rem;"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label text-white-50">Mesajınız</label>
+                <textarea asp-for="Message" class="form-control" rows="4" placeholder="Detaylı mesajınızı buraya yazabilirsiniz..."></textarea>
+                <span asp-validation-for="Message" class="text-danger" style="font-size: 0.85rem;"></span>
+            </div>
+            <div class="col-12 pt-2">
+                <button type="submit" class="btn-brass w-100 py-3" style="border: none; font-weight: 600;"><i class="fa-solid fa-paper-plane me-2"></i>Mesajı Gönder</button>
+            </div>
+        </div>
+    </form>
+</div>

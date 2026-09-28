@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IFeatureCategoryRepository, FeatureCategoryRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IGalleryInfoRepository, GalleryInfoRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
@@ -28,6 +29,7 @@ builder.Services.AddScoped<IFeatureService, FeatureService>();
 builder.Services.AddScoped<ICarFeatureService, CarFeatureService>();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 builder.Services.AddScoped<ICarViewService, CarViewService>();
+builder.Services.AddScoped<IGalleryInfoService, GalleryInfoService>();
 
 var app = builder.Build();
 
