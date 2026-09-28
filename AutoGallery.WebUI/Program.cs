@@ -21,6 +21,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IFeatureCategoryRepository, FeatureCategoryRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IGalleryInfoRepository, GalleryInfoRepository>();
+builder.Services.AddScoped<IAboutInfoRepository, AboutInfoRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
@@ -30,6 +31,7 @@ builder.Services.AddScoped<ICarFeatureService, CarFeatureService>();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 builder.Services.AddScoped<ICarViewService, CarViewService>();
 builder.Services.AddScoped<IGalleryInfoService, GalleryInfoService>();
+builder.Services.AddScoped<IAboutInfoService, AboutInfoService>();
 
 var app = builder.Build();
 

@@ -17,55 +17,7 @@
 </div>
 
 <!-- HİKAYEMİZ VE VİZYON -->
-<section class="container-x pb-5">
-    <div class="row g-5 align-items-center">
-        <div class="col-lg-6">
-            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; position: relative;">
-                <span style="color: var(--brass); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 12px;">Hikayemiz</span>
-                <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 1.8rem; line-height: 1.4;">Lüks ve Güvenilir Araç Alım-Satımında 18 Yıllık Deneyim</h3>
-                <p style="color: var(--tx-lm); line-height: 1.7; margin-bottom: 20px;">
-                    AutoGallery olarak sektöre adım attığımız günden bu yana, ikinci el otomotiv pazarındaki ezberleri bozmayı hedefledik. Sözlü garantiler yerine, ölçülebilir ve belgelendirilebilir ekspertiz raporlarıyla müşterilerimize tam şeffaflık sunuyoruz.
-                </p>
-                <p style="color: var(--tx-lm); line-height: 1.7; margin-bottom: 0;">
-                    Her biri alanında uzman ekibimizle, premium segmentteki araçları portföyümüze dahil ediyor; hem alıcı hem de satıcı için kusursuz bir deneyim inşa ediyoruz.
-                </p>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="row g-4">
-                <div class="col-6">
-                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
-                        <i class="fa-solid fa-award fa-2x mb-3" style="color: var(--brass);"></i>
-                        <h2 class="fw-bold text-white mb-1">18+</h2>
-                        <span style="color: var(--tx-lm); font-size: 0.9rem;">Yıllık Sektör Tecrübesi</span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
-                        <i class="fa-solid fa-car fa-2x mb-3" style="color: var(--brass);"></i>
-                        <h2 class="fw-bold text-white mb-1">2.500+</h2>
-                        <span style="color: var(--tx-lm); font-size: 0.9rem;">Mutlu Müşteri / Satış</span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
-                        <i class="fa-solid fa-shield-halved fa-2x mb-3" style="color: var(--brass);"></i>
-                        <h2 class="fw-bold text-white mb-1">%100</h2>
-                        <span style="color: var(--tx-lm); font-size: 0.9rem;">Şeffaf Ekspertiz Raporu</span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
-                        <i class="fa-solid fa-handshake fa-2x mb-3" style="color: var(--brass);"></i>
-                        <h2 class="fw-bold text-white mb-1">7/24</h2>
-                        <span style="color: var(--tx-lm); font-size: 0.9rem;">Konsinye ve Destek</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("AboutInfo")
 
 <!-- DEĞERLERİMİZ -->
 <section style="background-color: var(--ink2); padding: 90px 0 120px 0; border-top: 1px solid rgba(255,255,255,0.05);">

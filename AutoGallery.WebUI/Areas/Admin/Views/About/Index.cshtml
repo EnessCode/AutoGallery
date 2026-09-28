@@ -1,0 +1,116 @@
+@model AboutInfo
+
+@{
+    ViewData["Title"] = "Hakkımızda Sayfasını Düzenle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-white py-3 px-4 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0 fw-bold text-dark"><i class="fa-solid fa-address-card text-primary me-2"></i> Kurumsal Hakkımızda Yönetimi</h5>
+                        <small class="text-muted">Web sitenizin hakkımızda sayfasındaki hikaye, vizyon ve sayaç istatistiklerini buradan güncelleyebilirsiniz.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <form asp-action="Index" method="post">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label asp-for="TopTitle" class="form-label fw-semibold">Ana Başlık (Hikaye Sloganı)</label>
+                            <input asp-for="TopTitle" class="form-control" placeholder="Örn: Lüks ve Güvenilir Araç Alım-Satımında 18 Yıllık Deneyim" />
+                            <span asp-validation-for="TopTitle" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description1" class="form-label fw-semibold">Birinci Paragraf</label>
+                            <textarea asp-for="Description1" class="form-control" rows="3" placeholder="Kurumsal hikayenizin ilk paragrafı..."></textarea>
+                            <span asp-validation-for="Description1" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description2" class="form-label fw-semibold">İkinci Paragraf</label>
+                            <textarea asp-for="Description2" class="form-control" rows="3" placeholder="Kurumsal hikayenizin ikinci paragrafı..."></textarea>
+                            <span asp-validation-for="Description2" class="text-danger small"></span>
+                        </div>
+
+                        <hr class="my-4 text-muted">
+                        <h5 class="fw-bold text-secondary mb-3"><i class="bi bi-bar-chart me-1"></i> İstatistik Sayaçları ve İkonları</h5>
+
+                        <div class="col-md-4">
+                            <label asp-for="Stat1Value" class="form-label fw-semibold">1. Değer (Örn: 18+)</label>
+                            <input asp-for="Stat1Value" class="form-control" placeholder="18+" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Stat1Text" class="form-label fw-semibold">1. Açıklama</label>
+                            <input asp-for="Stat1Text" class="form-control" placeholder="Yıllık Sektör Tecrübesi" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Stat1Icon" class="form-label fw-semibold">1. İkon Sınıfı</label>
+                            <input asp-for="Stat1Icon" class="form-control" placeholder="fa-solid fa-award" />
+                        </div>
+
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat2Value" class="form-label fw-semibold">2. Değer (Örn: 2.500+)</label>
+                            <input asp-for="Stat2Value" class="form-control" placeholder="2.500+" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat2Text" class="form-label fw-semibold">2. Açıklama</label>
+                            <input asp-for="Stat2Text" class="form-control" placeholder="Mutlu Müşteri / Satış" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat2Icon" class="form-label fw-semibold">2. İkon Sınıfı</label>
+                            <input asp-for="Stat2Icon" class="form-control" placeholder="fa-solid fa-car" />
+                        </div>
+
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat3Value" class="form-label fw-semibold">3. Değer (Örn: %100)</label>
+                            <input asp-for="Stat3Value" class="form-control" placeholder="%100" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat3Text" class="form-label fw-semibold">3. Açıklama</label>
+                            <input asp-for="Stat3Text" class="form-control" placeholder="Şeffaf Ekspertiz Raporu" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat3Icon" class="form-label fw-semibold">3. İkon Sınıfı</label>
+                            <input asp-for="Stat3Icon" class="form-control" placeholder="fa-solid fa-shield-halved" />
+                        </div>
+
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat4Value" class="form-label fw-semibold">4. Değer (Örn: 7/24)</label>
+                            <input asp-for="Stat4Value" class="form-control" placeholder="7/24" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat4Text" class="form-label fw-semibold">4. Açıklama</label>
+                            <input asp-for="Stat4Text" class="form-control" placeholder="Konsinye ve Destek" />
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <label asp-for="Stat4Icon" class="form-label fw-semibold">4. İkon Sınıfı</label>
+                            <input asp-for="Stat4Icon" class="form-control" placeholder="fa-solid fa-handshake" />
+                        </div>
+
+                        <div class="col-12 pt-4 text-end">
+                            <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold">
+                                <i class="bi bi-save me-2"></i> Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

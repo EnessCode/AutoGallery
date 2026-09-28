@@ -1,0 +1,51 @@
+﻿@model AboutInfo
+
+<section class="container-x pb-5">
+    <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; position: relative;">
+                <span style="color: var(--brass); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 12px;">Hikayemiz</span>
+                <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 1.8rem; line-height: 1.4;">@Model.TopTitle</h3>
+                <p style="color: var(--tx-lm); line-height: 1.7; margin-bottom: 20px;">
+                    @Model.Description1
+                </p>
+                <p style="color: var(--tx-lm); line-height: 1.7; margin-bottom: 0;">
+                    @Model.Description2
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="row g-4">
+                <div class="col-6">
+                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
+                        <i class="@Model.Stat1Icon fa-2x mb-3" style="color: var(--brass);"></i>
+                        <h2 class="fw-bold text-white mb-1">@Model.Stat1Value</h2>
+                        <span style="color: var(--tx-lm); font-size: 0.9rem;">@Model.Stat1Text</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
+                        <i class="@Model.Stat2Icon fa-2x mb-3" style="color: var(--brass);"></i>
+                        <h2 class="fw-bold text-white mb-1">@Model.Stat2Value</h2>
+                        <span style="color: var(--tx-lm); font-size: 0.9rem;">@Model.Stat2Text</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
+                        <i class="@Model.Stat3Icon fa-2x mb-3" style="color: var(--brass);"></i>
+                        <h2 class="fw-bold text-white mb-1">@Model.Stat3Value</h2>
+                        <span style="color: var(--tx-lm); font-size: 0.9rem;">@Model.Stat3Text</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; text-align: center;">
+                        <i class="@Model.Stat4Icon fa-2x mb-3" style="color: var(--brass);"></i>
+                        <h2 class="fw-bold text-white mb-1">@Model.Stat4Value</h2>
+                        <span style="color: var(--tx-lm); font-size: 0.9rem;">@Model.Stat4Text</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
