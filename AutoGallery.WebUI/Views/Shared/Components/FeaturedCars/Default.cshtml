@@ -1,44 +1,338 @@
-﻿@model List<AutoGallery.Domain.Entities.Car>
+﻿@model List<Car>
 
-<section class="sec pt-5" id="stok">
+@{
+    bool useSlider = Model != null && Model.Count > 3;
+}
+
+@if (useSlider)
+{
+    <style>
+        .car-slider-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            gap: 1.5rem;
+            padding-bottom: 15px;
+        }
+
+            .car-slider-track::-webkit-scrollbar {
+                display: none;
+            }
+
+        .car-slider-item {
+            scroll-snap-align: start;
+            flex: 0 0 calc(33.3333% - 1rem);
+            min-width: calc(33.3333% - 1rem);
+        }
+
+        @@media (max-width: 991px) {
+            .car-slider-item {
+                flex: 0 0 calc(50% - 0.75rem);
+                min-width: calc(50% - 0.75rem);
+            }
+        }
+
+        @@media (max-width: 767px) {
+            .car-slider-item {
+                flex: 0 0 100%;
+                min-width: 100%;
+            }
+        }
+
+        .featured-card {
+            background-color: var(--ink2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+            .featured-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--brass);
+            }
+
+        .fc-img-wrap {
+            height: 240px;
+            background-color: #111;
+        }
+
+        .fc-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--brass);
+            color: #171410;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .fc-title {
+            color: var(--tx-l);
+            font-size: 1.3rem;
+        }
+
+        .fc-meta {
+            color: var(--tx-lm);
+            font-size: 0.9rem;
+        }
+
+        .fc-price {
+            color: var(--tx-l);
+            font-size: 1.4rem;
+        }
+
+        .fc-specs-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--tx-lm);
+            font-size: 0.9rem;
+        }
+
+        .fc-empty-state {
+            background-color: var(--ink2);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .btn-view-all {
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            font-weight: 600;
+            color: #171410;
+            transition: all 0.3s;
+        }
+
+            .btn-view-all:hover {
+                background-color: #171410;
+                color: white !important;
+                border-color: #171410;
+            }
+
+        .btn-brass-outline {
+            background-color: transparent;
+            border: 1px solid var(--brass);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: white;
+            transition: all 0.3s;
+        }
+
+            .btn-brass-outline:hover {
+                background-color: var(--brass);
+                color: #171410 !important;
+            }
+
+        .car-slider-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+            .car-slider-indicators button {
+                width: 35px;
+                height: 4px;
+                background-color: rgba(255, 255, 255, 0.2);
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.4s ease;
+                padding: 0;
+            }
+
+                .car-slider-indicators button:hover {
+                    background-color: rgba(182, 144, 91, 0.5);
+                }
+
+                .car-slider-indicators button.active {
+                    width: 60px;
+                    background-color: var(--brass);
+                }
+    </style>
+}
+
+<section class="sec pt-5 pb-5" id="stok">
     <div class="container-x">
-        <div class="sec-head">
-            <h2>Öne Çıkan Araçlar</h2>
-            <p>Portföyümüzdeki tüm araçlar teslimden önce tam ekspertizden geçer; işte bu haftanın vitrin araçları.</p>
+
+        <div class="d-flex justify-content-between align-items-end mb-4 pb-2">
+            <div>
+                <h2 class="fw-bold mb-2" style="color: #171410; font-size: 2.2rem;">Öne Çıkan Araçlar</h2>
+                <p class="mb-0" style="color: #4a5568; font-size: 1rem;">Portföyümüzdeki tüm araçlar teslimden önce tam ekspertizden geçer; işte bu haftanın vitrin araçları.</p>
+            </div>
+            <div class="d-none d-md-block">
+                <a asp-controller="Car" asp-action="Index" class="btn btn-view-all px-4 py-2 d-flex align-items-center">
+                    Tüm Stoğu Gör <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </div>
         </div>
-        <div class="row g-4">
-            @if (Model != null && Model.Any())
-            {
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="@(useSlider ? "car-slider-track" : "row g-4")" @(useSlider ? "id=featuredCarSlider" : "")>
                 @foreach (var car in Model)
                 {
-                    <div class="col-md-4">
-                        <div class="car-card">
-                            <div class="car-thumb">
-                                <span class="badge-featured">Vitrin</span>
-                                <span class="ct-label">@car.Brand @car.Model</span>
+                    var displayImage = car.CarImages != null && car.CarImages.Any()
+                    ? car.CarImages.FirstOrDefault().ImageUrl
+                    : "/images/placeholder.jpg";
+
+                    <div class="@(useSlider ? "car-slider-item" : "col-md-6 col-lg-4")">
+
+                        <div class="card h-100 text-decoration-none featured-card">
+
+                            <div class="position-relative fc-img-wrap">
+                                <img src="@displayImage" alt="@car.Brand @car.Model" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null;this.src='/images/placeholder.jpg';" />
+                                <span class="badge fc-badge">VİTRİN</span>
                             </div>
-                            <div class="car-body">
-                                <h3>@car.Brand @car.Model</h3>
-                                <div class="car-specs">
-                                    <span>@car.Year</span>
-                                    <span>@car.GearType</span>
-                                    <span>@car.FuelType</span>
+
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h3 class="fw-bold mb-1 text-truncate fc-title">@car.Brand @car.Model</h3>
+                                <div class="text-truncate mb-3 fc-meta">@car.Year · @car.Kilometer.ToString("N0") km</div>
+
+                                <div class="d-flex gap-4 mb-4 pb-3 fc-specs-row">
+                                    <span class="d-flex align-items-center">
+                                        <i class="fa-solid fa-gas-pump me-2" style="color: var(--brass-lt);"></i> @car.FuelType
+                                    </span>
+                                    <span class="d-flex align-items-center">
+                                        <i class="fa-solid fa-gear me-2" style="color: var(--brass-lt);"></i> @car.GearType
+                                    </span>
                                 </div>
-                                <div class="car-price">
-                                    <b>@car.Price.ToString("N0") ₺</b>
-                                    <a asp-controller="Car" asp-action="Detail" asp-route-id="@car.Id">Detay →</a>
+
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <div class="fw-bold fc-price">@car.Price.ToString("N0") ₺</div>
+                                    <a asp-controller="Car" asp-action="Detail" asp-route-id="@car.Id" class="btn btn-brass-outline px-3 py-2">
+                                        İncele
+                                    </a>
                                 </div>
                             </div>
+
                         </div>
+
                     </div>
                 }
-            }
-            else
+            </div>
+
+            @if (useSlider)
             {
-                <div class="col-12 text-center text-muted py-5">
-                    <p>Şu an vitrinde sergilenen araç bulunmamaktadır.</p>
-                </div>
+                <div class="car-slider-indicators" id="carSliderIndicators"></div>
             }
+        }
+        else
+        {
+            <div class="row g-4">
+                <div class="col-12 text-center py-5 fc-empty-state">
+                    <i class="fa-solid fa-car-side fs-1 mb-3" style="color: var(--tx-lm); opacity: 0.5;"></i>
+                    <p class="mb-0" style="color: var(--tx-lm); font-size: 1.1rem;">Şu an vitrinde sergilenen araç bulunmamaktadır.</p>
+                </div>
+            </div>
+        }
+
+        <div class="d-block d-md-none mt-4 text-center">
+            <a asp-controller="Car" asp-action="Index" class="btn btn-view-all w-100 py-3" style="color: white; border-color: rgba(255,255,255,0.1);">
+                Tüm Stoğu Gör
+            </a>
         </div>
+
     </div>
 </section>
+
+@if (useSlider)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slider = document.getElementById("featuredCarSlider");
+            const indicatorsContainer = document.getElementById("carSliderIndicators");
+            if (!slider || !indicatorsContainer) return;
+
+            let autoPlayInterval;
+            let currentIndex = 0;
+            let totalSteps = 0;
+            let indicators = [];
+
+            function initIndicators() {
+                indicatorsContainer.innerHTML = '';
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+                if (maxScroll <= 5) return;
+
+                const gap = parseFloat(getComputedStyle(slider).gap) || 24;
+                const itemWidth = slider.firstElementChild.offsetWidth + gap;
+                totalSteps = Math.ceil(maxScroll / itemWidth) + 1;
+
+                for (let i = 0; i < totalSteps; i++) {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    if (i === 0) btn.classList.add("active");
+
+                    btn.addEventListener("click", () => {
+                        scrollToStep(i);
+                        resetAutoPlay();
+                    });
+
+                    indicatorsContainer.appendChild(btn);
+                }
+                indicators = indicatorsContainer.querySelectorAll("button");
+            }
+
+            function updateIndicators(index) {
+                indicators.forEach(ind => ind.classList.remove("active"));
+                if (indicators[index]) indicators[index].classList.add("active");
+            }
+
+            function scrollToStep(index) {
+                if (totalSteps === 0) return;
+
+                const gap = parseFloat(getComputedStyle(slider).gap) || 24;
+                const itemWidth = slider.firstElementChild.offsetWidth + gap;
+                const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+                let targetLeft = index * itemWidth;
+                if (targetLeft > maxScroll) targetLeft = maxScroll;
+
+                slider.scrollTo({ left: targetLeft, behavior: 'smooth' });
+                currentIndex = index;
+                updateIndicators(currentIndex);
+            }
+
+            slider.addEventListener("scroll", () => {
+                if (totalSteps === 0) return;
+
+                const gap = parseFloat(getComputedStyle(slider).gap) || 24;
+                const itemWidth = slider.firstElementChild.offsetWidth + gap;
+                let step = Math.round(slider.scrollLeft / itemWidth);
+
+                if (step !== currentIndex && step < totalSteps) {
+                    currentIndex = step;
+                    updateIndicators(currentIndex);
+                }
+            });
+
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(() => {
+                    let nextIndex = currentIndex + 1;
+                    if (nextIndex >= totalSteps) nextIndex = 0;
+                    scrollToStep(nextIndex);
+                }, 4000);
+            }
+
+            function stopAutoPlay() { clearInterval(autoPlayInterval); }
+            function resetAutoPlay() { stopAutoPlay(); startAutoPlay(); }
+
+            slider.addEventListener('mouseenter', stopAutoPlay);
+            slider.addEventListener('mouseleave', startAutoPlay);
+            slider.addEventListener('touchstart', stopAutoPlay);
+            slider.addEventListener('touchend', startAutoPlay);
+
+            window.addEventListener('resize', () => {
+                initIndicators();
+                scrollToStep(0);
+            });
+
+            initIndicators();
+            startAutoPlay();
+        });
+    </script>
+}

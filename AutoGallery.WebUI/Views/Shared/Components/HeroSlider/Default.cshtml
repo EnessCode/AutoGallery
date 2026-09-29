@@ -1,49 +1,63 @@
-﻿<div id="premiumCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#premiumCarousel" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#premiumCarousel" data-bs-slide-to="1"></button>
-    </div>
+﻿@model List<Slider>
 
-    <div class="carousel-inner">
-        <div class="carousel-item active" style="background: linear-gradient(to right, rgba(18,21,27,0.9) 0%, rgba(18,21,27,0.3) 100%), url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=1920') center/cover; height: 75vh; min-height: 500px;">
-            <div class="container-x h-100 d-flex align-items-center">
-                <div class="text-white" style="max-width: 600px;">
-                    <span class="badge" style="background-color: var(--brass); color: #171410; font-size: 0.85rem; padding: 6px 12px; margin-bottom: 16px;">Hatasız & Boyasız</span>
-                    <h1 class="display-4 fw-bold mb-3" style="color: var(--tx-l); letter-spacing: -1px;">Mercedes-Benz C200 AMG</h1>
-                    <div class="d-flex gap-4 mb-4" style="color: var(--tx-lm); font-size: 1.1rem;">
-                        <span><i class="fa-solid fa-calendar-days me-1"></i> 2021</span>
-                        <span><i class="fa-solid fa-gauge-high me-1"></i> 31.200 km</span>
-                        <span><i class="fa-solid fa-gas-pump me-1"></i> Benzin</span>
-                    </div>
-                    <h2 class="mb-4 fw-bold" style="color: var(--tx-l);">2.450.000 ₺</h2>
-                    <a href="#" class="btn-brass d-inline-block px-4 py-3">İlanı İncele</a>
-                </div>
-            </div>
+@if (Model != null && Model.Any())
+{
+    <div id="premiumCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <button type="button" data-bs-target="#premiumCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></button>
+            }
         </div>
 
-        <div class="carousel-item" style="background: linear-gradient(to right, rgba(18,21,27,0.9) 0%, rgba(18,21,27,0.3) 100%), url('https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1920') center/cover; height: 75vh; min-height: 500px;">
-            <div class="container-x h-100 d-flex align-items-center">
-                <div class="text-white" style="max-width: 600px;">
-                    <span class="badge" style="background-color: var(--brass); color: #171410; font-size: 0.85rem; padding: 6px 12px; margin-bottom: 16px;">Vitrin İlanı</span>
-                    <h1 class="display-4 fw-bold mb-3" style="color: var(--tx-l); letter-spacing: -1px;">BMW 3.20i Luxury Line</h1>
-                    <div class="d-flex gap-4 mb-4" style="color: var(--tx-lm); font-size: 1.1rem;">
-                        <span><i class="fa-solid fa-calendar-days me-1"></i> 2022</span>
-                        <span><i class="fa-solid fa-gauge-high me-1"></i> 18.400 km</span>
-                        <span><i class="fa-solid fa-gas-pump me-1"></i> Dizel</span>
-                    </div>
-                    <h2 class="mb-4 fw-bold" style="color: var(--tx-l);">2.180.000 ₺</h2>
-                    <a href="#" class="btn-brass d-inline-block px-4 py-3">İlanı İncele</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var slider = Model[i];
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#premiumCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Önceki</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#premiumCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Sonraki</span>
-    </button>
-</div>
+                <div class="carousel-item @(i == 0 ? "active" : "")" style="background: linear-gradient(to right, rgba(18,21,27,0.9) 0%, rgba(18,21,27,0.3) 100%), url('@slider.ImageUrl') center/cover; height: 75vh; min-height: 500px;">
+                    <div class="container-x h-100 d-flex align-items-center">
+                        <div class="text-white" style="max-width: 600px;">
+
+                            @if (!string.IsNullOrEmpty(slider.BadgeText))
+                            {
+                                <span class="badge" style="background-color: var(--brass); color: #171410; font-size: 0.85rem; padding: 6px 12px; margin-bottom: 16px;">
+                                    @slider.BadgeText
+                                </span>
+                            }
+
+                            <h1 class="display-4 fw-bold mb-3" style="color: var(--tx-l); letter-spacing: -1px;">
+                                @slider.Title
+                            </h1>
+
+                            @if (!string.IsNullOrEmpty(slider.SubTitle))
+                            {
+                                <p class="mb-4" style="color: var(--tx-lm); font-size: 1.15rem; line-height: 1.6;">
+                                    @slider.SubTitle
+                                </p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(slider.ButtonText) && !string.IsNullOrEmpty(slider.ButtonUrl))
+                            {
+                                <a href="@slider.ButtonUrl" class="btn-brass d-inline-block px-4 py-3">
+                                    @slider.ButtonText
+                                </a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#premiumCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#premiumCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+}

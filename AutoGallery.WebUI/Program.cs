@@ -22,6 +22,9 @@ builder.Services.AddScoped<IFeatureCategoryRepository, FeatureCategoryRepository
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IGalleryInfoRepository, GalleryInfoRepository>();
 builder.Services.AddScoped<IAboutInfoRepository, AboutInfoRepository>();
+builder.Services.AddScoped<ISliderRepository, SliderRepository>();
+builder.Services.AddScoped<IExpertiseInfoRepository, ExpertiseInfoRepository>();
+builder.Services.AddScoped<IConsignmentRequestRepository, ConsignmentRequestRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
@@ -32,6 +35,9 @@ builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 builder.Services.AddScoped<ICarViewService, CarViewService>();
 builder.Services.AddScoped<IGalleryInfoService, GalleryInfoService>();
 builder.Services.AddScoped<IAboutInfoService, AboutInfoService>();
+builder.Services.AddScoped<ISliderService, SliderService>();
+builder.Services.AddScoped<IExpertiseInfoService, ExpertiseInfoService>();
+builder.Services.AddScoped<IConsignmentRequestService, ConsignmentRequestService>();
 
 var app = builder.Build();
 

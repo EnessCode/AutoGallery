@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoGallery.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.ViewComponents.Home
 {
 	public class HeroSliderViewComponent : ViewComponent
 	{
-		public IViewComponentResult Invoke()
+		private readonly ISliderService _sliderService;
+
+		public HeroSliderViewComponent(ISliderService sliderService)
 		{
-			return View();
+			_sliderService = sliderService;
+		}
+
+		public async Task<IViewComponentResult> InvokeAsync()
+		{
+			var sliders = await _sliderService.GetActiveSlidersAsync();
+			return View(sliders);
 		}
 	}
 }

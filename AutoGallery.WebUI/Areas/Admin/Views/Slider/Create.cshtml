@@ -1,0 +1,74 @@
+@model Slider
+@{
+    ViewData["Title"] = "Yeni Slider Ekle";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <div>
+        <h2 class="h4 mb-0 fw-bold">Yeni Slider Ekle</h2>
+        <div class="text-muted small mt-1">
+            <a asp-area="Admin" asp-controller="Slider" asp-action="Index" class="text-decoration-none text-muted">Slider Yönetimi</a> / Yeni Ekle
+        </div>
+    </div>
+    <a asp-area="Admin" asp-controller="Slider" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i> Listeye Dön</a>
+</div>
+
+<form asp-area="Admin" asp-controller="Slider" asp-action="Create" method="post" class="adm-form" novalidate>
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-white border-bottom pt-4 pb-3 px-4">
+            <h5 class="mb-0 fw-semibold text-dark"><i class="bi bi-info-circle me-2"></i>Slayt İçeriği</h5>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label fw-medium">Ana Başlık <span class="text-danger">*</span></label>
+                    <input type="text" asp-for="Title" class="form-control rounded-3" placeholder="Örn: Beklentilerin Ötesinde Bir Sürüş" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-medium">Alt Başlık</label>
+                    <input type="text" asp-for="SubTitle" class="form-control rounded-3" placeholder="Örn: Profesyonel ekibimizden teklif alın..." />
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label fw-medium">Görsel URL <span class="text-danger">*</span></label>
+                    <input type="text" asp-for="ImageUrl" class="form-control rounded-3" placeholder="https://..." required />
+                    <div class="form-text mt-1">Yüksek çözünürlüklü yatay (landscape) bir görsel bağlantısı girin.</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-medium">Rozet / Etiket Metni</label>
+                    <input type="text" asp-for="BadgeText" class="form-control rounded-3" placeholder="Örn: Yeni Gelen" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-medium">Buton Metni</label>
+                    <input type="text" asp-for="ButtonText" class="form-control rounded-3" placeholder="Örn: İlanları İncele" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-medium">Buton Hedef URL</label>
+                    <input type="text" asp-for="ButtonUrl" class="form-control rounded-3" placeholder="Örn: #konsinye veya /Car/Detail/5" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-medium">Gösterim Sırası</label>
+                    <input type="number" asp-for="Order" class="form-control rounded-3" value="1" />
+                </div>
+
+                <div class="col-md-6 d-flex align-items-end pb-2">
+                    <div class="form-check form-switch fs-5">
+                        <input class="form-check-input" type="checkbox" role="switch" asp-for="IsActive" id="IsActiveSwitch" checked>
+                        <label class="form-check-label fs-6 fw-medium text-dark ms-2 mt-1" for="IsActiveSwitch">Sitede Göster (Aktif)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light border-top p-4 d-flex justify-content-end rounded-bottom-3 gap-2">
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">İptal</a>
+            <button type="submit" class="btn text-white px-5 rounded-pill fw-bold" style="background-color: #b6905b;"><i class="bi bi-check2-circle me-1"></i> Slaytı Kaydet</button>
+        </div>
+    </div>
+</form>

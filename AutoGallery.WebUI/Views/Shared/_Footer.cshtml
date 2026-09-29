@@ -7,20 +7,32 @@
             </div>
             <div>
                 <h4>Keşfet</h4>
-                <ul><li><a href="#stok">Stoktaki Araçlar</a></li><li><a href="#ekspertiz">Ekspertiz</a></li><li><a href="#donanim">Donanım</a></li></ul>
+                <ul>
+                    <li><a asp-controller="Car" asp-action="Index">Stoktaki Araçlar</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-fragment="ekspertiz">Ekspertiz</a></li>
+                    <li><a asp-controller="Car" asp-action="Index">Donanım & Özellikler</a></li>
+                </ul>
             </div>
             <div>
                 <h4>Kurumsal</h4>
-                <ul><li><a href="#">Hakkımızda</a></li><li><a href="#konsinye">Aracını Sat</a></li><li><a href="#">İletişim</a></li></ul>
+                <ul>
+                    <li><a asp-controller="Home" asp-action="About">Hakkımızda</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-fragment="konsinye">Aracını Sat</a></li>
+                    <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
+                </ul>
             </div>
             <div>
                 <h4>İletişim</h4>
-                <ul><li>0212 555 40 40</li><li>info@autogallery.com.tr</li><li>Maslak, İstanbul</li></ul>
+                <ul>
+                    <li><a href="tel:02125554040" style="color: inherit; text-decoration: none;">0212 555 40 40</a></li>
+                    <li><a href="mailto:info@autogallery.com.tr" style="color: inherit; text-decoration: none;">info@autogallery.com.tr</a></li>
+                    <li>Maslak, İstanbul</li>
+                </ul>
             </div>
         </div>
         <div class="foot-bottom">
             <span>© @DateTime.Now.Year AutoGallery. Tüm hakları saklıdır.</span>
-            <span>Gizlilik Politikası · Kullanım Şartları</span>
+            <span><a asp-controller="Home" asp-action="Privacy" style="color: inherit; text-decoration: none;">Gizlilik Politikası</a> · <a asp-controller="Home" asp-action="Terms" style="color: inherit; text-decoration: none;">Kullanım Şartları</a></span>
         </div>
     </div>
 </footer>

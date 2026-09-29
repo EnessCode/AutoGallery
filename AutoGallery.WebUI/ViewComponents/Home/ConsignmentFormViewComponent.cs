@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoGallery.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.ViewComponents.Home
 {
@@ -6,7 +7,7 @@ namespace AutoGallery.WebUI.ViewComponents.Home
 	{
 		public IViewComponentResult Invoke()
 		{
-			return View();
+			return View(new ConsignmentRequest());
 		}
 	}
 }

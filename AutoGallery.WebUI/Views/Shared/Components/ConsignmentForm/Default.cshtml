@@ -1,4 +1,6 @@
-﻿<section class="sec consign" id="konsinye">
+﻿@model ConsignmentRequest
+
+<section class="sec consign" id="konsinye">
     <div class="container-x">
         <div class="consign-wrap">
             <div class="consign-left">
@@ -10,16 +12,45 @@
                     <li><b>03</b> Galeride güvenli satış veya anında nakit alım teklifi sunalım</li>
                 </ul>
             </div>
+
             <div class="consign-right">
-                <form>
+
+                @if (TempData["ConsignmentSuccess"] != null)
+                {
+                    <div class="alert alert-success mb-3 rounded-3" role="alert">
+                        @TempData["ConsignmentSuccess"]
+                    </div>
+                }
+
+                <form asp-controller="Home" asp-action="SubmitConsignment" method="post">
                     <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Ad Soyad</label><input class="form-control" placeholder="Adınız Soyadınız"></div>
-                        <div class="col-md-6"><label class="form-label">Telefon</label><input class="form-control" placeholder="05xx xxx xx xx"></div>
-                        <div class="col-md-6"><label class="form-label">Marka & Model</label><input class="form-control" placeholder="Örn. VW Passat"></div>
-                        <div class="col-md-3"><label class="form-label">Yıl</label><input class="form-control" placeholder="2021"></div>
-                        <div class="col-md-3"><label class="form-label">Kilometre</label><input class="form-control" placeholder="45.000"></div>
-                        <div class="col-12"><label class="form-label">Not (Opsiyonel)</label><textarea class="form-control" rows="2" placeholder="Aracın tramer, boya veya ekstra donanım bilgileri..."></textarea></div>
-                        <div class="col-12"><button type="button" class="btn-brass w-100 py-2 mt-2" style="font-size: 1.05rem;">Talebi Gönder</button></div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ad Soyad</label>
+                            <input asp-for="FullName" class="form-control" placeholder="Adınız Soyadınız" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Telefon</label>
+                            <input asp-for="Phone" class="form-control" placeholder="05xx xxx xx xx" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Marka & Model</label>
+                            <input asp-for="BrandAndModel" class="form-control" placeholder="Örn. VW Passat" required />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Yıl</label>
+                            <input asp-for="Year" type="number" class="form-control" placeholder="2021" required />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Kilometre</label>
+                            <input asp-for="Kilometer" type="number" class="form-control" placeholder="45000" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Not (Opsiyonel)</label>
+                            <textarea asp-for="Note" class="form-control" rows="2" placeholder="Aracın tramer, boya veya ekstra donanım bilgileri..."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn-brass w-100 py-2 mt-2" style="font-size: 1.05rem;">Talebi Gönder</button>
+                        </div>
                     </div>
                 </form>
             </div>

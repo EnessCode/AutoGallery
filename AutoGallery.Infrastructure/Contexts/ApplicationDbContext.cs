@@ -24,6 +24,9 @@ namespace AutoGallery.Infrastructure.Contexts
 		public DbSet<ContactMessage> ContactMessages { get; set; }
 		public DbSet<GalleryInfo> GalleryInfos { get; set; }
 		public DbSet<AboutInfo> AboutInfos { get; set; }
+		public DbSet<Slider> Sliders { get; set; }
+		public DbSet<ExpertiseInfo> ExpertiseInfos { get; set; }
+		public DbSet<ConsignmentRequest> ConsignmentRequests { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
