@@ -12,5 +12,6 @@ namespace AutoGallery.Application.Interfaces.Repositories
 		Task<List<Car>> GetFeaturedCarsAsync();
 		Task<Car> GetCarWithDetailsByIdAsync(int id);
 		Task<List<Car>> GetAllCarsWithImagesAsync();
+		Task<List<Car>> GetFilteredCarsAsync(string search = null, string gear = null, string fuel = null, string body = null, string color = null);
 	}
 }

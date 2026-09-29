@@ -1,0 +1,24 @@
+﻿@model string
+
+<section class="sec py-4">
+    <div class="container-x">
+        @if (string.IsNullOrWhiteSpace(Model))
+        {
+            <div class="text-center py-5" style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;">
+                <i class="fa-solid fa-align-left fa-3x mb-3" style="color: var(--brass-lt); opacity: 0.5;"></i>
+                <h5 style="color: var(--tx-l);">Açıklama Bulunmuyor</h5>
+                <p style="color: var(--tx-lm); margin-bottom: 0;">Bu araç için henüz detaylı bir açıklama girilmemiştir.</p>
+            </div>
+        }
+        else
+        {
+            <div class="p-5" style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px;">
+                    <i class="fa-solid fa-circle-info me-2" style="color: var(--brass);"></i>Araç Açıklaması
+                </h3>
+
+                <div style="color: var(--tx-lm); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap;">@Html.Raw(Model?.Trim())</div>
+            </div>
+        }
+    </div>
+</section>

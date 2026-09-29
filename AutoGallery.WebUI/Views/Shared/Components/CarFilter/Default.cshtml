@@ -1,0 +1,75 @@
+﻿@{
+    var fuelTypes = new[] { "Benzin", "Dizel", "LPG", "Hibrit", "Elektrik" };
+    var gearTypes = new[] { "Manuel", "Otomatik", "Yarı Otomatik" };
+    var bodyTypes = new[] { "Sedan", "Hatchback", "SUV", "Station Wagon", "Coupe", "Cabrio", "Pick-up", "Minivan" };
+    var colors = new[] { "Beyaz", "Siyah", "Gri", "Gümüş", "Lacivert", "Mavi", "Kırmızı", "Bordo", "Yeşil", "Kahverengi", "Bej" };
+
+    var currentSearch = Context.Request.Query["search"].ToString();
+    var currentGear = Context.Request.Query["gear"].ToString();
+    var currentFuel = Context.Request.Query["fuel"].ToString();
+    var currentBody = Context.Request.Query["body"].ToString();
+    var currentColor = Context.Request.Query["color"].ToString();
+}
+
+<section class="container-x pb-4">
+    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px;">
+        <form method="get" class="row g-3">
+
+            <div class="col-md-4 col-lg-2">
+                <label class="form-label text-white-50">Marka Ara</label>
+                <input type="text" name="search" class="form-control" placeholder="Örn. Mercedes..." value="@currentSearch">
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label class="form-label text-white-50">Vites Tipi</label>
+                <select name="gear" class="form-select">
+                    <option value="">Tümü</option>
+                    @foreach (var item in gearTypes)
+                    {
+                        <option value="@item" selected="@(item == currentGear)">@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label class="form-label text-white-50">Yakıt Tipi</label>
+                <select name="fuel" class="form-select">
+                    <option value="">Tümü</option>
+                    @foreach (var item in fuelTypes)
+                    {
+                        <option value="@item" selected="@(item == currentFuel)">@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label class="form-label text-white-50">Kasa Tipi</label>
+                <select name="body" class="form-select">
+                    <option value="">Tümü</option>
+                    @foreach (var item in bodyTypes)
+                    {
+                        <option value="@item" selected="@(item == currentBody)">@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label class="form-label text-white-50">Renk</label>
+                <select name="color" class="form-select">
+                    <option value="">Tümü</option>
+                    @foreach (var item in colors)
+                    {
+                        <option value="@item" selected="@(item == currentColor)">@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2 d-flex flex-column">
+                <label class="form-label" style="visibility: hidden;">Hizalama</label>
+                <button type="submit" class="btn-brass w-100 flex-grow-1" style="border: none; font-weight: 600;">
+                    <i class="fa-solid fa-filter me-2"></i>Filtrele
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

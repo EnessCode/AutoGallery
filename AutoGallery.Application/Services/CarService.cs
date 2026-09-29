@@ -3,6 +3,7 @@ using AutoGallery.Application.Interfaces.Services;
 using AutoGallery.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,9 @@ namespace AutoGallery.Application.Services
 			_carRepository = carRepository;
 		}
 
-		public async Task<List<Car>> GetAllCarsAsync()
+		public async Task<List<Car>> GetAllCarsAsync(string search = null, string gear = null, string fuel = null, string body = null, string color = null)
 		{
-			return await _carRepository.GetAllCarsWithImagesAsync();
+			return await _carRepository.GetFilteredCarsAsync(search, gear, fuel, body, color);
 		}
 
 		public async Task<List<Car>> GetFeaturedCarsAsync()

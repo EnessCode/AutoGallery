@@ -1,44 +1,82 @@
-﻿@model AutoGallery.Domain.Entities.Car
+﻿@model Car
 
 @{
     ViewData["Title"] = $"{Model.Brand} {Model.Model} - Detaylar";
 }
 
-<div class="container-x py-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-2" style="font-size: 0.9rem;">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" style="color: var(--brass-lt); text-decoration: none;">Anasayfa</a></li>
-            <li class="breadcrumb-item"><a href="#" style="color: var(--brass-lt); text-decoration: none;">Araçlar</a></li>
-            <li class="breadcrumb-item active" aria-current="page" style="color: var(--tx-lm);">@Model.Brand @Model.Model</li>
-        </ol>
-    </nav>
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div>
-            <h1 class="fw-bold mb-1" style="color: var(--tx-l); font-size: 2.2rem;">@Model.Title</h1>
-            <p class="mb-0" style="color: var(--tx-lm);">@Model.Brand @Model.Model · @Model.Year · @Model.Kilometer.ToString("N0") km</p>
-        </div>
-        <div class="text-end">
-            <h2 class="fw-bold mb-0" style="color: var(--brass-lt); font-size: 2rem;">@Model.Price.ToString("N0") ₺</h2>
-            <span style="font-size: 0.85rem; color: var(--tx-lm);">KDV Dahil / Kurumsal Güvenceyle</span>
+<style>
+    .car-detail-tabs {
+        border-bottom: none; 
+        margin-bottom: 20px;
+    }
+
+        .car-detail-tabs .nav-link {
+            color: #4a5568;
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px; 
+            padding: 14px 32px;
+            font-weight: 700; 
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-right: 15px; 
+        }
+
+            .car-detail-tabs .nav-link:hover {
+                color: var(--ink);
+                background-color: #e2e8f0;
+                border-color: #cbd5e1;
+            }
+
+            .car-detail-tabs .nav-link.active {
+                color: #ffffff !important;
+                background-color: var(--brass) !important;
+                border-color: var(--brass) !important;
+                box-shadow: 0 4px 15px rgba(182, 144, 91, 0.4); 
+                transform: translateY(-2px); 
+            }
+</style>
+
+<!-- ÜST BAŞLIK -->
+<div style="background-color: var(--ink2); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 40px 0; margin-bottom: 30px;">
+    <div class="container-x">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2" style="font-size: 0.9rem;">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" style="color: var(--brass-lt); text-decoration: none;">Anasayfa</a></li>
+                <li class="breadcrumb-item"><a href="#" style="color: var(--brass-lt); text-decoration: none;">Araçlar</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: var(--tx-lm);">@Model.Brand @Model.Model</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h1 class="fw-bold mb-1" style="color: var(--tx-l); font-size: 2.2rem;">@Model.Title</h1>
+                <p class="mb-0" style="color: var(--tx-lm);">@Model.Brand @Model.Model · @Model.Year · @Model.Kilometer.ToString("N0") km</p>
+            </div>
+            <div class="text-end">
+                <h2 class="fw-bold mb-0" style="color: var(--brass-lt); font-size: 2rem;">@Model.Price.ToString("N0") ₺</h2>
+                <span style="font-size: 0.85rem; color: var(--tx-lm);">KDV Dahil / Kurumsal Güvenceyle</span>
+            </div>
         </div>
     </div>
 </div>
 
-<section class="container-x pb-5">
+<!-- GALERİ VE ÖZET ALANI -->
+<section class="container-x pb-4">
     <div class="row g-4">
         <div class="col-lg-8">
-            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; height: 450px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                <span style="color: var(--tx-lm); font-size: 1.2rem;"><i class="fa-solid fa-camera me-2"></i> @Model.Brand @Model.Model — Fotoğraf Galerisi</span>
-                <span class="badge-featured" style="position: absolute; top: 16px; left: 16px;">Kurumsal Ekspertizli</span>
-            </div>
+            @await Component.InvokeAsync("CarDetailGallery", new { car = Model })
         </div>
 
         <div class="col-lg-4">
-            <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px;">
-                <h4 class="mb-4 fw-bold" style="color: var(--tx-l); font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">Araç Özeti</h4>
+            <div class="h-100 d-flex flex-column" style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px;">
 
-                <ul class="list-unstyled mb-4" style="display: flex; flex-direction: column; gap: 14px; color: var(--tx-lm);">
-                    <li class="d-flex justify-content-between"><span>Marka / Model:</span><strong style="color: var(--tx-l);">@Model.Brand @Model.Model</strong></li>
+                <h4 class="mb-3 fw-bold" style="color: var(--tx-l); font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">Araç Özeti</h4>
+
+                <ul class="list-unstyled mb-auto" style="display: flex; flex-direction: column; gap: 10px; color: var(--tx-lm); font-size: 0.95rem;">
+                    <li class="d-flex justify-content-between text-end">
+                        <span class="text-start me-3">Marka / Model:</span>
+                        <strong style="color: var(--tx-l); line-height: 1.3;">@Model.Brand @Model.Model</strong>
+                    </li>
                     <li class="d-flex justify-content-between"><span>Yıl:</span><strong style="color: var(--tx-l);">@Model.Year</strong></li>
                     <li class="d-flex justify-content-between"><span>Kilometre:</span><strong style="color: var(--tx-l);">@Model.Kilometer.ToString("N0") km</strong></li>
                     <li class="d-flex justify-content-between"><span>Vites Tipi:</span><strong style="color: var(--tx-l);">@Model.GearType</strong></li>
@@ -47,69 +85,77 @@
                     <li class="d-flex justify-content-between"><span>Kasa Tipi:</span><strong style="color: var(--tx-l);">@Model.BodyType</strong></li>
                 </ul>
 
-                <button class="btn-brass w-100 py-3 text-center" style="border: none; font-weight: 600;"><i class="fa-solid fa-phone me-2"></i>Galeri İletişim Hattı</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="sec sec-alt py-5">
-    <div class="container-x">
-        <div class="exp-wrap">
-            <div>
-                <div class="eyebrow" style="color: var(--brass-lt); margin-bottom:10px;">%100 Şeffaflık Raporu</div>
-                <h3 style="color: var(--tx-l); font-size: 2rem; margin-bottom: 20px;">13 Nokta Ekspertiz Analizi</h3>
-                <p style="color:var(--tx-lm); line-height:1.65; margin-bottom: 20px;">
-                    Bu araç galerimiz tarafından tescilli ekspertiz standartlarına göre incelenmiştir. Aşağıda parçaların boya ve değişen durumları detaylıca yer almaktadır.
-                </p>
-                <div class="p-3" style="background: rgba(182, 144, 91, 0.1); border-left: 4px solid var(--brass); border-radius: 4px;">
-                    <span style="color: var(--tx-l); font-size: 0.95rem;"><b>Not:</b> Araçta şasi, podye ve direklerde kesinlikle işlem bulunmamaktadır.</span>
-                </div>
-            </div>
-
-            <div class="exp-diagram">
-                <ul class="exp-list">
-                    <li><span>Kaput</span><b class="ok">Orijinal</b></li>
-                    <li><span>Tavan</span><b class="ok">Orijinal</b></li>
-                    <li><span>Ön Çamurluk (Sol)</span><b class="paint">Boyalı</b></li>
-                    <li><span>Ön Kapı (Sağ)</span><b class="ok">Orijinal</b></li>
-                    <li><span>Şasi / Podye</span><b class="ok">Sorunsuz</b></li>
-                    <li><span>Bagaj Kapağı</span><b class="ok">Orijinal</b></li>
-                </ul>
-                <div class="exp-legend mt-3">
-                    <span><span class="dot ok"></span>Orijinal</span>
-                    <span><span class="dot paint"></span>Boyalı</span>
-                    <span><span class="dot chg"></span>Değişen</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="sec py-5">
-    <div class="container-x">
-        <div class="sec-head">
-            <h2>Donanım ve Özellikler</h2>
-            <p>Araca ait iç, dış ve güvenlik donanımlarının detaylı listesi.</p>
-        </div>
-
-        <div class="feat-grid">
-            @if (Model.CarFeatures != null && Model.CarFeatures.Any())
-            {
-                @foreach (var cf in Model.CarFeatures)
-                {
-                    <div class="feat-chip">
-                        <i class="@cf.Feature.Icon me-2" style="color: var(--brass);"></i> @cf.Feature.Name
+                <div class="row g-2 mt-4">
+                    <div class="col-6">
+                        <a href="tel:+905320000000" class="btn-brass w-100 py-2 d-flex align-items-center justify-content-center text-decoration-none" style="border: none; font-weight: 600; border-radius: 8px; color: var(--ink); font-size: 0.95rem;">
+                            <i class="fa-solid fa-phone me-2"></i>Ara
+                        </a>
                     </div>
-                }
-            }
-            else
-            {
-                <div class="feat-chip"><i class="fa-solid fa-couch me-2" style="color: var(--brass);"></i> Deri Döşeme</div>
-                <div class="feat-chip"><i class="fa-solid fa-temperature-arrow-up me-2" style="color: var(--brass);"></i> Koltuk Isıtma</div>
-                <div class="feat-chip"><i class="fa-regular fa-lightbulb me-2" style="color: var(--brass);"></i> LED Farlar</div>
-                <div class="feat-chip"><i class="fa-solid fa-car-side me-2" style="color: var(--brass);"></i> Hız Sabitleyici</div>
-            }
+                    <div class="col-6">
+                        <a href="https://wa.me/905320000000?text=Merhaba, @Model.Brand @Model.Model (@Model.Year) ilanınızla ilgileniyorum. Araç duruyor mu?"
+                           target="_blank"
+                           class="w-100 py-2 d-flex align-items-center justify-content-center text-decoration-none"
+                           style="background-color: #25D366; color: white; border: none; font-weight: 600; border-radius: 8px; transition: opacity 0.3s; font-size: 0.95rem;">
+                            <i class="fa-brands fa-whatsapp me-2" style="font-size: 1.1rem;"></i>WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </section>
+
+<!-- SEKME (TAB) MENÜSÜ -->
+<div class="container-x mt-5 mb-0">
+    <ul class="nav nav-pills car-detail-tabs justify-content-start" id="carTab" role="tablist">
+
+        <!-- Açıklama (Aktif) -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="desc-tab" data-bs-toggle="pill" data-bs-target="#desc" type="button" role="tab" aria-controls="desc" aria-selected="true">
+                <i class="fa-solid fa-align-left me-2"></i>Araç Açıklaması
+            </button>
+        </li>
+
+        <!-- Ekspertiz -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="appraisal-tab" data-bs-toggle="pill" data-bs-target="#appraisal" type="button" role="tab" aria-controls="appraisal" aria-selected="false">
+                <i class="fa-solid fa-file-shield me-2"></i>Ekspertiz Raporu
+            </button>
+        </li>
+
+        <!-- Donanım ve Özellikler -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="features-tab" data-bs-toggle="pill" data-bs-target="#features" type="button" role="tab" aria-controls="features" aria-selected="false">
+                <i class="fa-solid fa-list-check me-2"></i>Donanım ve Özellikler
+            </button>
+        </li>
+
+    </ul>
+</div>
+
+<!-- SEKME (TAB) İÇERİKLERİ -->
+<div class="tab-content" id="carTabContent">
+
+    <!-- Açıklama -->
+    <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab">
+        <div style="background-color: var(--ink2); padding-top: 40px; padding-bottom: 40px; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            @await Component.InvokeAsync("CarDetailDescription", new { description = Model.Description })
+        </div>
+    </div>
+
+    <!-- Ekspertiz -->
+    <div class="tab-pane fade" id="appraisal" role="tabpanel" aria-labelledby="appraisal-tab">
+        <div style="background-color: var(--ink2); padding-top: 40px; padding-bottom: 40px; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            @await Component.InvokeAsync("CarDetailExpertise", new { expertise = Model.Expertise })
+        </div>
+    </div>
+
+    <!-- Donanım ve Özellikler -->
+    <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
+        <div style="background-color: var(--ink2); padding-top: 40px; padding-bottom: 40px; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            @await Component.InvokeAsync("CarDetailFeatures", new { features = Model.CarFeatures })
+        </div>
+    </div>
+
+</div>

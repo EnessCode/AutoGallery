@@ -1,4 +1,4 @@
-﻿@model List<AutoGallery.Domain.Entities.Car>
+﻿@model List<Car>
 
 @{
     ViewData["Title"] = "Araçlarımız — Stok Portföyü";
@@ -19,82 +19,7 @@
 </div>
 
 <!-- FİLTRELEME ALANI -->
-<section class="container-x pb-4">
-    <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px;">
-        <form method="get" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label text-white-50">Marka Ara</label>
-                <input type="text" name="search" class="form-control" placeholder="Örn. Mercedes, BMW...">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label text-white-50">Vites Tipi</label>
-                <select name="gear" class="form-select">
-                    <option value="">Tümü</option>
-                    <option value="Otomatik">Otomatik</option>
-                    <option value="Manuel">Manuel</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label text-white-50">Yakıt Tipi</label>
-                <select name="fuel" class="form-select">
-                    <option value="">Tümü</option>
-                    <option value="Benzin">Benzin</option>
-                    <option value="Dizel">Dizel</option>
-                    Hybrid / Elektrik
-                    <option value="Hibrit">Hibrit</option>
-                </select>
-            </div>
-            <div class="col-md-3 d-flex align-items-end">
-                <button type="submit" class="btn-brass w-100 py-2" style="border: none; font-weight: 600;"><i class="fa-solid fa-filter me-2"></i>Filtrele</button>
-            </div>
-        </form>
-    </div>
-</section>
+@await Component.InvokeAsync("CarFilter")
 
 <!-- ARAÇ LİSTESİ -->
-<section class="container-x pb-5">
-    <div class="row g-4">
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var car in Model)
-            {
-                <div class="col-md-4">
-                    <div class="car-card">
-                        <div class="car-thumb">
-                            @if (car.IsSold)
-                            {
-                                <span class="badge-sold">Satıldı</span>
-                            }
-                            else if (car.IsFeatured)
-                            {
-                                <span class="badge-featured">Vitrin</span>
-                            }
-                            <span class="ct-label">@car.Brand @car.Model</span>
-                        </div>
-                        <div class="car-body">
-                            <h3>@car.Brand @car.Model</h3>
-                            <div class="car-specs">
-                                <span>@car.Year</span>
-                                <span>@car.Kilometer.ToString("N0") km</span>
-                                <span>@car.GearType</span>
-                                <span>@car.FuelType</span>
-                            </div>
-                            <div class="car-price">
-                                <b>@car.Price.ToString("N0") ₺</b>
-                                <a asp-controller="Car" asp-action="Detail" asp-route-id="@car.Id">Detay →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="col-12 text-center py-5" style="color: var(--tx-lm);">
-                <i class="fa-solid fa-car-slash fa-3x mb-3" style="color: var(--brass);"></i>
-                <h4>Aradığınız kriterlere uygun araç bulunamadı.</h4>
-                <p>Lütfen filtreleri değiştirerek tekrar deneyin.</p>
-            </div>
-        }
-    </div>
-</section>
+@await Component.InvokeAsync("CarList", new { cars = Model })

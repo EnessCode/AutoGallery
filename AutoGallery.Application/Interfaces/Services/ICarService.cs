@@ -9,7 +9,7 @@ namespace AutoGallery.Application.Interfaces.Services
 {
 	public interface ICarService
 	{
-		Task<List<Car>> GetAllCarsAsync();
+		Task<List<Car>> GetAllCarsAsync(string search = null, string gear = null, string fuel = null, string body = null, string color = null); 
 		Task<List<Car>> GetFeaturedCarsAsync();
 		Task<Car> GetCarDetailsAsync(int id);
 		Task CreateCarAsync(Car car);

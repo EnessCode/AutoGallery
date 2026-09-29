@@ -19,7 +19,7 @@ namespace AutoGallery.Infrastructure.Repositories
 		public async Task<List<Car>> GetAllCarsWithImagesAsync()
 		{
 			return await _context.Cars
-										.Include(c => c.CarImages) 
+										.Include(c => c.CarImages)
 										.OrderByDescending(c => c.Id)
 										.ToListAsync();
 		}
@@ -31,6 +31,7 @@ namespace AutoGallery.Infrastructure.Repositories
 							.Include(c => c.Expertise)
 							.Include(c => c.CarFeatures)
 								.ThenInclude(cf => cf.Feature)
+								.ThenInclude(f => f.FeatureCategory)
 							.FirstOrDefaultAsync(c => c.Id == id);
 		}
 
@@ -42,6 +43,38 @@ namespace AutoGallery.Infrastructure.Repositories
 							.OrderByDescending(c => c.CreatedAt)
 							.Take(6)
 							.ToListAsync();
+		}
+
+		public async Task<List<Car>> GetFilteredCarsAsync(string search = null, string gear = null, string fuel = null, string body = null, string color = null)
+		{
+			var query = _context.Cars.Include(c => c.CarImages).AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(search))
+			{
+				query = query.Where(c => c.Brand.Contains(search) || c.Model.Contains(search));
+			}
+
+			if (!string.IsNullOrWhiteSpace(gear))
+			{
+				query = query.Where(c => c.GearType == gear);
+			}
+
+			if (!string.IsNullOrWhiteSpace(fuel))
+			{
+				query = query.Where(c => c.FuelType == fuel);
+			}
+
+			if (!string.IsNullOrWhiteSpace(body))
+			{
+				query = query.Where(c => c.BodyType == body);
+			}
+
+			if (!string.IsNullOrWhiteSpace(color))
+			{
+				query = query.Where(c => c.Color == color);
+			}
+
+			return await query.ToListAsync();
 		}
 	}
 }

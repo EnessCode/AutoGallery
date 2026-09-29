@@ -1,0 +1,55 @@
+﻿@model List<Car>
+
+<section class="container-x pb-5">
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var car in Model)
+            {
+                <div class="col-md-4">
+                    <div class="car-card">
+                        <div class="car-thumb position-relative overflow-hidden" style="padding: 0; margin: 0; width: 100%; height: 220px;">
+
+                            @{
+                                var displayImage = car.CarImages != null && car.CarImages.Any()
+                                ? car.CarImages.FirstOrDefault().ImageUrl
+                                : "/images/placeholder.jpg";
+                            }
+                            <img src="@displayImage" alt="@car.Brand @car.Model" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.onerror=null;this.src='/images/placeholder.jpg';" />
+                            @if (car.IsSold)
+                            {
+                                <span class="badge-sold">Satıldı</span>
+                            }
+                            else if (car.IsFeatured)
+                            {
+                                <span class="badge-featured">Vitrin</span>
+                            }
+
+                        </div>
+                        <div class="car-body">
+                            <h3>@car.Brand @car.Model</h3>
+                            <div class="car-specs">
+                                <span>@car.Year</span>
+                                <span>@car.Kilometer.ToString("N0") km</span>
+                                <span>@car.GearType</span>
+                                <span>@car.FuelType</span>
+                            </div>
+                            <div class="car-price">
+                                <b>@car.Price.ToString("N0") ₺</b>
+                                <a asp-controller="Car" asp-action="Detail" asp-route-id="@car.Id">Detay →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center py-5" style="color: var(--tx-lm);">
+                <i class="fa-solid fa-car-slash fa-3x mb-3" style="color: var(--brass);"></i>
+                <h4>Aradığınız kriterlere uygun araç bulunamadı.</h4>
+                <p>Lütfen filtreleri değiştirerek tekrar deneyin.</p>
+            </div>
+        }
+    </div>
+</section>

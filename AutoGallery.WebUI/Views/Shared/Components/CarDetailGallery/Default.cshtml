@@ -1,0 +1,38 @@
+﻿@model Car
+
+<div id="carGalleryCarousel" class="carousel slide" data-bs-ride="carousel" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; height: 450px; background-color: var(--ink2); position: relative;">
+
+    <div class="carousel-inner h-100">
+        @if (Model.CarImages != null && Model.CarImages.Any())
+        {
+            var isFirst = true;
+            foreach (var img in Model.CarImages)
+            {
+                <div class="carousel-item h-100 @(isFirst ? "active" : "")">
+                    <img src="@img.ImageUrl" class="d-block w-100 h-100" style="object-fit: cover;" alt="@Model.Brand @Model.Model">
+                </div>
+                isFirst = false;
+            }
+        }
+        else
+        {
+            <div class="carousel-item active h-100 d-flex align-items-center justify-content-center">
+                <span style="color: var(--tx-lm); font-size: 1.2rem;">
+                    <i class="fa-solid fa-camera me-2"></i> Araca ait görsel bulunamadı
+                </span>
+            </div>
+        }
+    </div>
+
+    @if (Model.CarImages != null && Model.CarImages.Count > 1)
+    {
+        <button class="carousel-control-prev" type="button" data-bs-target="#carGalleryCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carGalleryCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    }
+</div>

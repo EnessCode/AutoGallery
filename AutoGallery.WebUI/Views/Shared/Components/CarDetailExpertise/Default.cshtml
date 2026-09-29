@@ -1,0 +1,104 @@
+﻿@model CarExpertise
+
+@{
+    string GetStatusColor(string status)
+    {
+        if (string.IsNullOrWhiteSpace(status)) return "#10b981"; 
+
+        status = status.ToLower();
+        if (status.Contains("boya")) return "#f59e0b"; 
+        if (status.Contains("değiş")) return "#ef4444"; 
+
+        return "#10b981"; 
+    }
+}
+
+<section class="sec py-4">
+    <div class="container-x">
+
+        @if (Model == null)
+        {
+            <div class="text-center py-5" style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;">
+                <i class="fa-solid fa-clipboard-list fa-3x mb-3" style="color: var(--brass-lt); opacity: 0.5;"></i>
+                <h5 style="color: var(--tx-l);">Ekspertiz Raporu Hazırlanıyor</h5>
+                <p style="color: var(--tx-lm); margin-bottom: 0;">Bu araca ait detaylı ekspertiz raporu kısa süre içinde sisteme yüklenecektir.</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <div style="position: sticky; top: 120px;">
+                        <span style="color: var(--brass); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 12px;">%100 Şeffaflık Raporu</span>
+                        <h3 class="fw-bold mb-4" style="color: var(--tx-l); font-size: 2rem; line-height: 1.3;">13 Nokta Ekspertiz Analizi</h3>
+
+                        <p style="color: var(--tx-lm); line-height: 1.7; margin-bottom: 30px;">
+                            Bu araç galerimiz tarafından tescilli ekspertiz standartlarına göre incelenmiştir. Sağ taraftaki tabloda kaporta aksamının boya ve değişen durumları detaylıca yer almaktadır.
+                        </p>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.GeneralCondition))
+                        {
+                            <div class="p-4" style="background: rgba(182, 144, 91, 0.05); border: 1px solid rgba(182, 144, 91, 0.2); border-left: 4px solid var(--brass); border-radius: 8px;">
+                                <div style="color: var(--brass); font-weight: 600; margin-bottom: 8px;"><i class="fa-solid fa-circle-info me-2"></i>Uzman Notu</div>
+                                <span style="color: var(--tx-l); font-size: 0.95rem; line-height: 1.6; display: block;">@Model.GeneralCondition</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="p-4" style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                        <ul class="list-unstyled mb-0">
+                            @{
+                                var parts = new Dictionary<string, string>
+                                                {
+                                                { "Motor Kaputu", Model.EngineHood },
+                                                { "Tavan", Model.Roof },
+                                                { "Ön Tampon", Model.FrontBumper },
+                                                { "Arka Tampon", Model.RearBumper },
+                                                { "Sol Ön Çamurluk", Model.FrontLeftFender },
+                                                { "Sağ Ön Çamurluk", Model.FrontRightFender },
+                                                { "Sol Arka Çamurluk", Model.RearLeftFender },
+                                                { "Sağ Arka Çamurluk", Model.RearRightFender },
+                                                { "Sol Ön Kapı", Model.FrontLeftDoor },
+                                                { "Sağ Ön Kapı", Model.FrontRightDoor },
+                                                { "Sol Arka Kapı", Model.RearLeftDoor },
+                                                { "Sağ Arka Kapı", Model.RearRightDoor },
+                                                { "Bagaj Kapağı", Model.TrunkCover }
+                                                };
+                            }
+
+                            @foreach (var part in parts)
+                            {
+                                var statusText = string.IsNullOrWhiteSpace(part.Value) ? "Orijinal" : part.Value;
+                                var statusColor = GetStatusColor(statusText);
+
+                                <li class="d-flex justify-content-between align-items-center py-3" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <span style="color: var(--tx-lm); font-size: 1rem;">@part.Key</span>
+                                    <strong style="color: @statusColor; font-size: 0.95rem; font-weight: 600;">@statusText</strong>
+                                </li>
+                            }
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-4 mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.05);">
+                            <div class="d-flex align-items-center">
+                                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #10b981; margin-right: 8px;"></span>
+                                <span style="color: var(--tx-lm); font-size: 0.85rem;">Orijinal</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #f59e0b; margin-right: 8px;"></span>
+                                <span style="color: var(--tx-lm); font-size: 0.85rem;">Boyalı</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #ef4444; margin-right: 8px;"></span>
+                                <span style="color: var(--tx-lm); font-size: 0.85rem;">Değişen</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
