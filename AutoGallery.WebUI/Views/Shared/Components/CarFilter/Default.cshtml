@@ -2,25 +2,24 @@
     var fuelTypes = new[] { "Benzin", "Dizel", "LPG", "Hibrit", "Elektrik" };
     var gearTypes = new[] { "Manuel", "Otomatik", "Yarı Otomatik" };
     var bodyTypes = new[] { "Sedan", "Hatchback", "SUV", "Station Wagon", "Coupe", "Cabrio", "Pick-up", "Minivan" };
-    var colors = new[] { "Beyaz", "Siyah", "Gri", "Gümüş", "Lacivert", "Mavi", "Kırmızı", "Bordo", "Yeşil", "Kahverengi", "Bej" };
 
     var currentSearch = Context.Request.Query["search"].ToString();
     var currentGear = Context.Request.Query["gear"].ToString();
     var currentFuel = Context.Request.Query["fuel"].ToString();
     var currentBody = Context.Request.Query["body"].ToString();
-    var currentColor = Context.Request.Query["color"].ToString();
+    var currentSort = Context.Request.Query["sort"].ToString();
 }
 
 <section class="container-x pb-4">
     <div style="background-color: var(--ink2); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px;">
-        <form method="get" class="row g-3">
+        <form method="get" class="row g-3 align-items-end">
 
-            <div class="col-md-4 col-lg-2">
+            <div class="col-md-3">
                 <label class="form-label text-white-50">Marka Ara</label>
                 <input type="text" name="search" class="form-control" placeholder="Örn. Mercedes..." value="@currentSearch">
             </div>
 
-            <div class="col-md-4 col-lg-2">
+            <div class="col-md-3">
                 <label class="form-label text-white-50">Vites Tipi</label>
                 <select name="gear" class="form-select">
                     <option value="">Tümü</option>
@@ -31,7 +30,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4 col-lg-2">
+            <div class="col-md-3">
                 <label class="form-label text-white-50">Yakıt Tipi</label>
                 <select name="fuel" class="form-select">
                     <option value="">Tümü</option>
@@ -42,7 +41,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4 col-lg-2">
+            <div class="col-md-3">
                 <label class="form-label text-white-50">Kasa Tipi</label>
                 <select name="body" class="form-select">
                     <option value="">Tümü</option>
@@ -53,23 +52,24 @@
                 </select>
             </div>
 
-            <div class="col-md-4 col-lg-2">
-                <label class="form-label text-white-50">Renk</label>
-                <select name="color" class="form-select">
-                    <option value="">Tümü</option>
-                    @foreach (var item in colors)
-                    {
-                        <option value="@item" selected="@(item == currentColor)">@item</option>
-                    }
+            <div class="col-md-9 mt-3">
+                <label class="form-label text-white-50">Sıralama Ölçütü</label>
+                <select name="sort" class="form-select">
+                    <option value="newest" selected="@(currentSort == "newest" || string.IsNullOrEmpty(currentSort))">En Yeni Eklenenler (Varsayılan)</option>
+                    <option value="price_asc" selected="@(currentSort == "price_asc")">Fiyat (Önce En Düşük)</option>
+                    <option value="price_desc" selected="@(currentSort == "price_desc")">Fiyat (Önce En Yüksek)</option>
+                    <option value="year_desc" selected="@(currentSort == "year_desc")">Yıl (Önce En Yeni Modeller)</option>
+                    <option value="year_asc" selected="@(currentSort == "year_asc")">Yıl (Önce En Eski Modeller)</option>
+                    <option value="km_asc" selected="@(currentSort == "km_asc")">Kilometre (Önce En Düşük)</option>
                 </select>
             </div>
 
-            <div class="col-md-4 col-lg-2 d-flex flex-column">
-                <label class="form-label" style="visibility: hidden;">Hizalama</label>
-                <button type="submit" class="btn-brass w-100 flex-grow-1" style="border: none; font-weight: 600;">
-                    <i class="fa-solid fa-filter me-2"></i>Filtrele
+            <div class="col-md-3 mt-3">
+                <button type="submit" class="btn-brass w-100" style="border: none; font-weight: 600; padding: 0.6rem 1rem;">
+                    <i class="fa-solid fa-filter me-2"></i>Filtrele ve Sırala
                 </button>
             </div>
+
         </form>
     </div>
 </section>
