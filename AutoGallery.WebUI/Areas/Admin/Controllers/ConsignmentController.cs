@@ -1,9 +1,11 @@
 ﻿using AutoGallery.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize]
 	public class ConsignmentController : Controller
 	{
 		private readonly IConsignmentRequestService _service;

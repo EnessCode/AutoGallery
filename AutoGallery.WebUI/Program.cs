@@ -5,6 +5,7 @@ using AutoGallery.Infrastructure.Contexts;
 using AutoGallery.Infrastructure.Repositories;
 using AutoGallery.Infrastructure.Services;
 using AutoGallery.WebUI.Areas.Admin.Services.Car;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IAboutInfoRepository, AboutInfoRepository>();
 builder.Services.AddScoped<ISliderRepository, SliderRepository>();
 builder.Services.AddScoped<IExpertiseInfoRepository, ExpertiseInfoRepository>();
 builder.Services.AddScoped<IConsignmentRequestRepository, ConsignmentRequestRepository>();
+builder.Services.AddScoped<IAdminUserRepository, AdminUserRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
@@ -38,6 +40,16 @@ builder.Services.AddScoped<IAboutInfoService, AboutInfoService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<IExpertiseInfoService, ExpertiseInfoService>();
 builder.Services.AddScoped<IConsignmentRequestService, ConsignmentRequestService>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+	.AddCookie(options =>
+	{
+		options.Cookie.Name = "AutoGallery.Auth";
+		options.LoginPath = "/Account/Login"; 
+		options.LogoutPath = "/Account/Logout";
+		options.ExpireTimeSpan = TimeSpan.FromDays(7);
+	});
 
 var app = builder.Build();
 
@@ -52,6 +64,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

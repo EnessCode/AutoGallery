@@ -1,3 +1,20 @@
+@{
+    var fullName = User.Identity.Name;
+    var initials = "AA";
+    if (!string.IsNullOrEmpty(fullName))
+    {
+        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length >= 2)
+        {
+            initials = $"{char.ToUpper(parts[0][0])}{char.ToUpper(parts[1][0])}";
+        }
+        else if (parts.Length == 1)
+        {
+            initials = $"{char.ToUpper(parts[0][0])}";
+        }
+    }
+}
+
 <header class="adm-topbar">
     <div class="adm-topbar-left">
         <button class="adm-burger" id="admBurger" type="button" aria-label="Menüyü aç">
@@ -7,31 +24,12 @@
     </div>
 
     <div class="adm-topbar-right">
-        <div class="adm-search">
-            <i class="bi bi-search"></i>
-            <input type="text" placeholder="Araç, marka veya talep ara..." />
-        </div>
-
-        <button class="adm-icon-btn" type="button" aria-label="Bildirimler">
-            <i class="bi bi-bell"></i>
-            <span class="dot"></span>
-        </button>
-
-        <div class="dropdown">
-            <div class="adm-user" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="adm-avatar">MK</div>
-                <div>
-                    <div class="adm-user-name">Mert Kaya</div>
-                    <div class="adm-user-role">Galeri Yöneticisi</div>
-                </div>
-                <i class="bi bi-chevron-down" style="font-size:.75rem;color:var(--a-tx-dm);"></i>
+        <div class="adm-user">
+            <div class="adm-avatar">@initials</div>
+            <div>
+                <div class="adm-user-name">@fullName</div>
+                <div class="adm-user-role">Galeri Yöneticisi</div>
             </div>
-            <ul class="dropdown-menu dropdown-menu-end mt-2">
-                <li><a class="dropdown-item" href="/Admin/Profile"><i class="bi bi-person me-2"></i>Profilim</a></li>
-                <li><a class="dropdown-item" href="/Admin/Settings"><i class="bi bi-gear me-2"></i>Ayarlar</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="/Account/Logout"><i class="bi bi-box-arrow-left me-2"></i>Çıkış Yap</a></li>
-            </ul>
         </div>
     </div>
 </header>

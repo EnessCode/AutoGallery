@@ -1,10 +1,12 @@
 ﻿using AutoGallery.Application.Interfaces.Services;
 using AutoGallery.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize]
 	public class SliderController : Controller
 	{
 		private readonly ISliderService _sliderService;

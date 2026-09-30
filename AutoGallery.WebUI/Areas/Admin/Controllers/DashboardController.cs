@@ -1,10 +1,12 @@
 ﻿using AutoGallery.Application.Interfaces.Services;
 using AutoGallery.WebUI.Areas.Admin.Models.Dashboard;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize]
 	public class DashboardController : Controller
 	{
 		private readonly ICarService _carService;

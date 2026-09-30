@@ -2,6 +2,7 @@
 using AutoGallery.Domain.Entities;
 using AutoGallery.WebUI.Areas.Admin.Models;
 using AutoGallery.WebUI.Areas.Admin.Models.Feature;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace AutoGallery.WebUI.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize]
 	public class FeaturesController : Controller
 	{
 		private readonly IFeatureCategoryService _categoryService;

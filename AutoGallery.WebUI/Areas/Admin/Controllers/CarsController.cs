@@ -4,11 +4,13 @@ using AutoGallery.WebUI.Areas.Admin.Helpers;
 using AutoGallery.WebUI.Areas.Admin.Models.Car;
 using AutoGallery.WebUI.Areas.Admin.Services;
 using AutoGallery.WebUI.Areas.Admin.Services.Car;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize]
 	public class CarsController : Controller
 	{
 		private readonly ICarService _carService;

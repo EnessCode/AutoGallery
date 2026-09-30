@@ -27,6 +27,7 @@ namespace AutoGallery.Infrastructure.Contexts
 		public DbSet<Slider> Sliders { get; set; }
 		public DbSet<ExpertiseInfo> ExpertiseInfos { get; set; }
 		public DbSet<ConsignmentRequest> ConsignmentRequests { get; set; }
+		public DbSet<AdminUser> AdminUsers { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
