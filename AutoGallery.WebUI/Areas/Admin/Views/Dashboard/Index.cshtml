@@ -1,50 +1,138 @@
+@model DashboardViewModel
 @{
-    ViewData["Title"] = "Panel";
-    Layout = "_AdminLayout";
+    ViewData["Title"] = "Yönetim Paneli Özeti";
 }
 
-<div class="row g-3 mb-4">
-    <div class="col-6 col-lg-3">
-        <div class="adm-stat">
-            <span>Aktif Portföy</span>
-            <b>340</b><span class="trend up">▲ 4.2%</span>
+<div class="row g-3 mb-4 mt-2">
+    <div class="col-6 col-xl-3">
+        <div class="p-3 bg-white rounded-3 shadow-sm border h-100 d-flex flex-column justify-content-center" style="border-color: rgba(0,0,0,0.08) !important;">
+            <span class="text-muted small d-block mb-1 fw-medium"><i class="bi bi-car-front text-primary me-1"></i> Aktif Portföy</span>
+            <b class="fs-3 text-dark mb-0">@Model.TotalCars</b>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
-        <div class="adm-stat">
-            <span>Bu Ay Satış</span>
-            <b>27</b><span class="trend up">▲ 12%</span>
+
+    <div class="col-6 col-xl-3">
+        <div class="p-3 bg-white rounded-3 shadow-sm border h-100 d-flex flex-column justify-content-center" style="border-color: rgba(0,0,0,0.08) !important;">
+            <span class="text-muted small d-block mb-1 fw-medium"><i class="bi bi-check2-circle text-success me-1"></i> Satılan Araçlar</span>
+            <b class="fs-3 text-dark mb-0">@Model.SoldCars</b>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
-        <div class="adm-stat">
-            <span>Bekleyen Konsinye</span>
-            <b>12</b><span class="trend down">▼ 2</span>
+
+    <div class="col-6 col-xl-3">
+        <div class="p-3 bg-white rounded-3 shadow-sm border h-100 d-flex flex-column justify-content-center" style="border-color: rgba(0,0,0,0.08) !important;">
+            <span class="text-muted small d-block mb-1 fw-medium"><i class="bi bi-star text-warning me-1"></i> Vitrin Araçları</span>
+            <b class="fs-3 text-dark mb-0">@Model.FeaturedCarsCount</b>
         </div>
     </div>
-    <div class="col-6 col-lg-3">
-        <div class="adm-stat">
-            <span>Ortalama Satış Süresi</span>
-            <b>18 gün</b>
+
+    <div class="col-6 col-xl-3">
+        <div class="p-3 bg-white rounded-3 shadow-sm border h-100 d-flex flex-column justify-content-center" style="border-color: rgba(0,0,0,0.08) !important;">
+            <span class="text-muted small d-block mb-1 fw-medium"><i class="bi bi-inbox text-info me-1"></i> Bekleyen Konsinye</span>
+            <div class="d-flex align-items-center gap-2">
+                <b class="fs-3 text-dark mb-0">@Model.PendingConsignments</b>
+                @if (Model.PendingConsignments > 0)
+                {
+                    <span class="badge bg-danger rounded-pill px-2 py-1" style="font-size: 0.75rem;">İncelenecek!</span>
+                }
+            </div>
         </div>
     </div>
 </div>
 
-<div class="adm-card">
-    <div class="d-flex justify-content-between align-items-center p-3 pb-0">
-        <h2 class="h6 fw-bold mb-0">Son Konsinye Talepleri</h2>
-        <a href="/Admin/SellRequests" class="btn-adm-brass">Tümünü Gör</a>
+<div class="row g-4">
+
+    <div class="col-lg-6">
+        <div class="adm-card shadow-sm border-0 rounded-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-center p-4 border-bottom">
+                <h2 class="h6 fw-bold mb-0 text-dark"><i class="bi bi-chat-left-text me-2 text-muted"></i>Son Talepler</h2>
+                <a asp-controller="Consignment" asp-action="Index" class="btn btn-sm text-white px-3 py-1 fw-medium" style="background-color: var(--brass); border-radius: 6px;">Tümünü Gör</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table adm-table mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3 text-muted fw-semibold">Müşteri</th>
+                            <th class="py-3 text-muted fw-semibold">Araç</th>
+                            <th class="py-3 text-muted fw-semibold text-end pe-4">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecentConsignments != null && Model.RecentConsignments.Any())
+                        {
+                            @foreach (var item in Model.RecentConsignments)
+                            {
+                                <tr>
+                                    <td class="ps-4 py-3 fw-bold text-dark">@item.FullName</td>
+                                    <td class="py-3 text-muted small">@item.BrandAndModel</td>
+                                    <td class="py-3 text-end pe-4">
+                                        @if (item.IsProcessed)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">İncelendi</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill">Yeni</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="3" class="text-center py-4 text-muted small">Talep bulunmuyor.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table adm-table mb-0">
-            <thead>
-                <tr><th>Talep Sahibi</th><th>Araç</th><th>Fiyat Beklentisi</th><th>Durum</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Ahmet Yılmaz</td><td>BMW 3.20i — 2022</td><td>2.180.000 ₺</td><td><span class="status-pill ok">İncelendi</span></td></tr>
-                <tr><td>Elif Demir</td><td>Audi A4 — 2020</td><td>1.890.000 ₺</td><td><span class="status-pill paint">Beklemede</span></td></tr>
-                <tr><td>Can Öztürk</td><td>Mercedes C200 — 2021</td><td>2.450.000 ₺</td><td><span class="status-pill chg">Reddedildi</span></td></tr>
-            </tbody>
-        </table>
+
+    <div class="col-lg-6">
+        <div class="adm-card shadow-sm border-0 rounded-3 bg-white h-100">
+            <div class="d-flex justify-content-between align-items-center p-4 border-bottom">
+                <h2 class="h6 fw-bold mb-0 text-dark"><i class="bi bi-car-front me-2 text-muted"></i>Son Eklenen Araçlar</h2>
+                <a asp-controller="Cars" asp-action="Index" class="btn btn-sm text-dark px-3 py-1 fw-medium border" style="border-radius: 6px;">Tümünü Gör</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table adm-table mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3 text-muted fw-semibold">Araç</th>
+                            <th class="py-3 text-muted fw-semibold">Fiyat</th>
+                            <th class="py-3 text-muted fw-semibold text-end pe-4">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecentCars != null && Model.RecentCars.Any())
+                        {
+                            @foreach (var car in Model.RecentCars)
+                            {
+                                <tr>
+                                    <td class="ps-4 py-3 fw-bold text-dark">
+                                        @car.Brand @car.Model
+                                        <div class="text-muted fw-normal" style="font-size: 0.8rem;">@car.Year · @car.Kilometer.ToString("N0") km</div>
+                                    </td>
+                                    <td class="py-3 fw-medium" style="color: var(--brass);">@car.Price.ToString("N0") ₺</td>
+                                    <td class="py-3 text-end pe-4">
+                                        @if (car.IsSold)
+                                        {
+                                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill">Satıldı</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">Aktif</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="3" class="text-center py-4 text-muted small">Araç bulunmuyor.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

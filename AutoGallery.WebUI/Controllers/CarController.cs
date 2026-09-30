@@ -14,7 +14,9 @@ namespace AutoGallery.WebUI.Controllers
 		public async Task<IActionResult> Index(string search, string gear, string fuel, string body, string color)
 		{
 			var cars = await _carService.GetAllCarsAsync(search, gear, fuel, body, color);
-			return View(cars);
+			var activeCars = cars?.Where(c => !c.IsSold).ToList();
+
+			return View(activeCars);
 		}
 
 		public async Task<IActionResult> Detail(int id)
