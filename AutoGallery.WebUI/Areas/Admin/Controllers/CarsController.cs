@@ -28,9 +28,25 @@ namespace AutoGallery.WebUI.Areas.Admin.Controllers
 			_carViewService = carViewService;
 		}
 
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(int page = 1)
 		{
-			return View(await _carService.GetAllCarsAsync());
+			int pageSize = 10; 
+
+			var allCars = await _carService.GetAllCarsAsync();
+
+			int totalItems = allCars.Count;
+			int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+			var paginatedCars = allCars
+				.OrderByDescending(x => x.Id)
+				.Skip((page - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			ViewBag.CurrentPage = page;
+			ViewBag.TotalPages = totalPages;
+
+			return View(paginatedCars);
 		}
 
 		[HttpGet]

@@ -1,5 +1,5 @@
 ﻿using AutoGallery.Application.Interfaces.Services;
-using AutoGallery.WebUI.Areas.Admin.Models;
+using AutoGallery.WebUI.Areas.Admin.Models.Dashboard;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoGallery.WebUI.Areas.Admin.Controllers

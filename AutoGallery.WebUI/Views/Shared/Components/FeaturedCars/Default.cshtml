@@ -4,157 +4,154 @@
     bool useSlider = Model != null && Model.Count > 3;
 }
 
-@if (useSlider)
-{
-    <style>
-        .car-slider-track {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            gap: 1.5rem;
-            padding-bottom: 15px;
+<style>
+    .car-slider-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        gap: 1.5rem;
+        padding-bottom: 15px;
+    }
+
+        .car-slider-track::-webkit-scrollbar {
+            display: none;
         }
 
-            .car-slider-track::-webkit-scrollbar {
-                display: none;
-            }
+    .car-slider-item {
+        scroll-snap-align: start;
+        flex: 0 0 calc(33.3333% - 1rem);
+        min-width: calc(33.3333% - 1rem);
+    }
 
+    @@media (max-width: 991px) {
         .car-slider-item {
-            scroll-snap-align: start;
-            flex: 0 0 calc(33.3333% - 1rem);
-            min-width: calc(33.3333% - 1rem);
+            flex: 0 0 calc(50% - 0.75rem);
+            min-width: calc(50% - 0.75rem);
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .car-slider-item {
+            flex: 0 0 100%;
+            min-width: 100%;
+        }
+    }
+
+    .featured-card {
+        background-color: var(--ink2);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--brass);
         }
 
-        @@media (max-width: 991px) {
-            .car-slider-item {
-                flex: 0 0 calc(50% - 0.75rem);
-                min-width: calc(50% - 0.75rem);
-            }
+    .fc-img-wrap {
+        height: 240px;
+        background-color: #111;
+    }
+
+    .fc-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: var(--brass);
+        color: #171410;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    .fc-title {
+        color: var(--tx-l);
+        font-size: 1.3rem;
+    }
+
+    .fc-meta {
+        color: var(--tx-lm);
+        font-size: 0.9rem;
+    }
+
+    .fc-price {
+        color: var(--tx-l);
+        font-size: 1.4rem;
+    }
+
+    .fc-specs-row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--tx-lm);
+        font-size: 0.9rem;
+    }
+
+    .fc-empty-state {
+        background-color: var(--ink2);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+    }
+
+    .btn-view-all {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        font-weight: 600;
+        color: #171410;
+        transition: all 0.3s;
+    }
+
+        .btn-view-all:hover {
+            background-color: #171410;
+            color: white !important;
+            border-color: #171410;
         }
 
-        @@media (max-width: 767px) {
-            .car-slider-item {
-                flex: 0 0 100%;
-                min-width: 100%;
-            }
-        }
+    .btn-brass-outline {
+        background-color: transparent;
+        border: 1px solid var(--brass);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: white;
+        transition: all 0.3s;
+    }
 
-        .featured-card {
-            background-color: var(--ink2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-            .featured-card:hover {
-                transform: translateY(-5px);
-                border-color: var(--brass);
-            }
-
-        .fc-img-wrap {
-            height: 240px;
-            background-color: #111;
-        }
-
-        .fc-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
+        .btn-brass-outline:hover {
             background-color: var(--brass);
-            color: #171410;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 6px 12px;
-            border-radius: 6px;
+            color: #171410 !important;
         }
 
-        .fc-title {
-            color: var(--tx-l);
-            font-size: 1.3rem;
+    .car-slider-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+        .car-slider-indicators button {
+            width: 35px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 0;
         }
 
-        .fc-meta {
-            color: var(--tx-lm);
-            font-size: 0.9rem;
-        }
-
-        .fc-price {
-            color: var(--tx-l);
-            font-size: 1.4rem;
-        }
-
-        .fc-specs-row {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--tx-lm);
-            font-size: 0.9rem;
-        }
-
-        .fc-empty-state {
-            background-color: var(--ink2);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-        }
-
-        .btn-view-all {
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            font-weight: 600;
-            color: #171410;
-            transition: all 0.3s;
-        }
-
-            .btn-view-all:hover {
-                background-color: #171410;
-                color: white !important;
-                border-color: #171410;
+            .car-slider-indicators button:hover {
+                background-color: rgba(182, 144, 91, 0.5);
             }
 
-        .btn-brass-outline {
-            background-color: transparent;
-            border: 1px solid var(--brass);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: white;
-            transition: all 0.3s;
-        }
-
-            .btn-brass-outline:hover {
+            .car-slider-indicators button.active {
+                width: 60px;
                 background-color: var(--brass);
-                color: #171410 !important;
             }
-
-        .car-slider-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-            .car-slider-indicators button {
-                width: 35px;
-                height: 4px;
-                background-color: rgba(255, 255, 255, 0.2);
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: all 0.4s ease;
-                padding: 0;
-            }
-
-                .car-slider-indicators button:hover {
-                    background-color: rgba(182, 144, 91, 0.5);
-                }
-
-                .car-slider-indicators button.active {
-                    width: 60px;
-                    background-color: var(--brass);
-                }
-    </style>
-}
+</style>
 
 <section class="sec pt-5 pb-5" id="stok">
     <div class="container-x">
@@ -183,7 +180,6 @@
                     <div class="@(useSlider ? "car-slider-item" : "col-md-6 col-lg-4")">
 
                         <div class="card h-100 text-decoration-none featured-card">
-
                             <div class="position-relative fc-img-wrap">
                                 <img src="@displayImage" alt="@car.Brand @car.Model" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null;this.src='/images/placeholder.jpg';" />
                                 <span class="badge fc-badge">VİTRİN</span>
@@ -209,7 +205,6 @@
                                     </a>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>

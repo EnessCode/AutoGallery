@@ -1,7 +1,6 @@
 @model List<Car>
 @{
     ViewData["Title"] = "Araç Yönetimi";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="card shadow-sm border-0 rounded-3 mt-3">
@@ -74,6 +73,35 @@
                     }
                 </tbody>
             </table>
+
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Araçlar Sayfalama" class="mt-4 mb-2">
+                    <ul class="pagination justify-content-center">
+
+                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link text-dark" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">Önceki</a>
+                        </li>
+
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                <a class="page-link"
+                                   style="@(ViewBag.CurrentPage == i ? "background-color: var(--brass); border-color: var(--brass); color: #171410 !important; font-weight: bold;" : "color: #171410;")"
+                                   asp-action="Index"
+                                   asp-route-page="@i">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                            <a class="page-link text-dark" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">Sonraki</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            }
 
             @if (!Model.Any())
             {
